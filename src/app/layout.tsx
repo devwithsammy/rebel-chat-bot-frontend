@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
+import { ThemeProvider } from "@contexts/ThemeHandler";
+import { defaultMeta } from "@src/shared/meta";
+
+export const metadata: Metadata = {
+  ...defaultMeta,
+};
 
 export default function RootLayout({
   children,
@@ -8,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         {/* load google font  */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,11 +28,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/* end loading of fonts */}
+        <script></script>
       </head>
       <body className={`antialiased`}>
-        <NextTopLoader color="#808080" height={4} showSpinner={true} />
+        <ThemeProvider>
+          <NextTopLoader color="#808080" height={4} showSpinner={true} />
 
-        {children}
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
