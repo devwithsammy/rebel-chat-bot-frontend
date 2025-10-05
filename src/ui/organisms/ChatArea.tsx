@@ -17,7 +17,7 @@ export default function ChatArea() {
     }
   };
   return (
-    <div className="text-3xl bg-slate-100 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-10 pb-20">
+    <div className="text-3xl px-4 bg-slate-100 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-10 pb-20">
       <div className="flex justify-center mt-auto">
         <h4 className="bg-slate-50 shadow-sm  mx-auto py-4 px-6 uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg">
           {process.env.NEXT_PUBLIC_APP_NAME}

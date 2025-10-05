@@ -3,6 +3,7 @@ import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ThemeProvider } from "@contexts/ThemeHandler";
 import { defaultMeta } from "@src/shared/meta";
+import { SidebarProvider } from "@contexts/SidebarContext";
 
 export const metadata: Metadata = {
   ...defaultMeta,
@@ -14,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <head>
         {/* load google font  */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,10 +32,9 @@ export default function RootLayout({
         <script></script>
       </head>
       <body className={`antialiased`}>
+        <NextTopLoader color="#808080" height={4} showSpinner={true} />
         <ThemeProvider>
-          <NextTopLoader color="#808080" height={4} showSpinner={true} />
-
-          {children}
+          <SidebarProvider>{children}</SidebarProvider>
         </ThemeProvider>
       </body>
     </html>

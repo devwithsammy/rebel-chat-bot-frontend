@@ -14,7 +14,7 @@ export default function Home() {
       <div className="">
         <Sidebar />
       </div>
-      <div className="">
+      <div className="bg-white">
         <Nav />
         <ChatArea />
       </div>

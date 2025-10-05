@@ -13,7 +13,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(
-    window?.matchMedia("(prefers-color-scheme: dark)")?.matches
+    !(typeof window !== undefined && "matchMedia" in window)
+      ? "light"
+      : window?.matchMedia("(prefers-color-scheme: dark)")?.matches
       ? "dark"
       : "light"
   );
