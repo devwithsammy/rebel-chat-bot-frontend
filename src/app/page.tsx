@@ -1,20 +1,12 @@
 import { Metadata } from "next";
-import Nav from "@ui/organisms/Nav";
 
+import { defaultMeta } from "@src/shared/meta";
+import Home from "./Home";
 
-export const metadata:Metadata = {
-  title: "Rebel Chat Bot",
-  description: "An AI-powered chat bot that helps you rebel against the status quo.",
+export const metadata: Metadata = {
+  ...defaultMeta,
 };
 
-export default function Home() {
-  return (
-    <div className="">
-     <div className="text-3xl font-bold bg-accent-500 underline  dark:text-(--c-foreground)">
-      <Nav />
-     home page 
-     </div>
-
-    </div>
-  );
+export default function Page() {
+  return <Home />;
 }

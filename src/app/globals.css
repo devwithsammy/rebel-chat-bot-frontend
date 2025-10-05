@@ -11,6 +11,7 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -27,6 +28,7 @@ body {
   overflow-x: hidden !important;
   background: var(--c-background);
   color: var(--c-foreground);
+  font-family: "Nunito", sans-serif;
 }
 
 /* fonts */
