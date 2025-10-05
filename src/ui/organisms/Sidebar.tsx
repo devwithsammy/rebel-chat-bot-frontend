@@ -1,6 +1,6 @@
 "use client";
 import { TbLayoutSidebarRightExpand } from "react-icons/tb";
-import { useSidebar } from "@src/contexts/SidebarContext";
+import { SidebarInterface, useSidebar } from "@src/contexts/SidebarContext";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useState } from "react";
 import { format, isToday, isYesterday, parseISO, subDays } from "date-fns";
@@ -18,10 +18,10 @@ const formatFullDate = (utcTimestamp: string) => {
 };
 
 export const Sidebar = () => {
-  const sidebarContext = useSidebar();
-  console.log(sidebarContext);
+  const { handleOpenSidebar, openSidebar } = useSidebar() as SidebarInterface;
   const { groupedHistory, historyCount } = useHistory();
-
+   
+  if (!openSidebar) return null ; 
   return (
     <div className={`bg-slate-50 text-slate-800 h-screen p-4 w-[200px]`}>
       <div className="flex flex-row  justify-between items-baseline">
@@ -31,12 +31,11 @@ export const Sidebar = () => {
         <button
           className="cursor-pointer  hover:outline-1 outline-offset-2 rounded-lg  outline-gray-300"
           title={"close sidebar"}
-          
+          onClick={() => handleOpenSidebar(!openSidebar)}
         >
           <TbLayoutSidebarRightExpand className="text-xl" />
         </button>
       </div>
-
 
       <div className="mt-16">
         <p className="font-semibold text-gray-800">Chat History</p>
@@ -76,10 +75,7 @@ const SearchSection = ({
       <h4 className="text-sm font-semibold mb-2">{title}</h4>
       <div className="">
         {items.map((item, index) => (
-          <p
-            key={index}
-            className="text-gray-700 text-sm "
-          >
+          <p key={index} className="text-gray-700 text-sm ">
             <span>{item.query}</span>
             <span className="block text-gray-400 text-xs">
               {title === "Earlier"

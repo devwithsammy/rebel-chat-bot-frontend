@@ -2,9 +2,9 @@
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 import { createContext, useContext, useState } from "react";
 
-interface SidebarInterface {
+export interface SidebarInterface {
   openSidebar: boolean;
-  updateSidebarState: (x: boolean) => void;
+  handleOpenSidebar: (x: boolean) => void;
 }
 
 const sidebarContext = createContext<SidebarInterface | null>(null);
@@ -19,14 +19,14 @@ export const SidebarProvider = ({
   const [openSidebar, setOpensidebar] = useState(
     isMobile || innerWidth < 768 ? false : true
   );
-  const updateSidebarState = (x: boolean) => {
+  const handleOpenSidebar = (x: boolean) => {
     setOpensidebar(x);
   };
   return (
     <sidebarContext.Provider
       value={{
         openSidebar,
-        updateSidebarState,
+        handleOpenSidebar,
       }}
     >
       {children}
