@@ -21,9 +21,9 @@ export const Sidebar = () => {
   const { handleOpenSidebar, openSidebar } = useSidebar() as SidebarInterface;
   const { groupedHistory, historyCount } = useHistory();
    
-  if (!openSidebar) return null ; 
+  if (!!openSidebar) return null ; 
   return (
-    <div className={`bg-slate-50 text-slate-800 h-screen p-4 w-[200px]`}>
+    <div className={`bg-slate-50 text-slate-800 h-screen p-4 w-[200px] overflow-y-scroll`}>
       <div className="flex flex-row  justify-between items-baseline">
         <h2 className="bg-slate-50 uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg">
           {process.env.NEXT_PUBLIC_APP_NAME}
@@ -38,7 +38,7 @@ export const Sidebar = () => {
       </div>
 
       <div className="mt-16">
-        <p className="font-semibold text-gray-800">Chat History</p>
+        <p className="font-semibold text-gray-700 font-nunito">Chat History</p>
         <div>
           Search
           {/* TODO */}
@@ -71,12 +71,12 @@ const SearchSection = ({
 }) => {
   if (!items.length) return null;
   return (
-    <div className="mb-6">
-      <h4 className="text-sm font-semibold mb-2">{title}</h4>
-      <div className="">
+    <div className="mb-6 font-nunito">
+      <h4 className="text-sm font-semibold text-gray-700 mb-2">{title}</h4>
+      <div className="space-y-1">
         {items.map((item, index) => (
-          <p key={index} className="text-gray-700 text-sm ">
-            <span>{item.query}</span>
+          <p key={index} className="text-gray-700 text-sm  ">
+            <span className="block truncate">{item.query}</span>
             <span className="block text-gray-400 text-xs">
               {title === "Earlier"
                 ? formatFullDate(item.timestamp)
