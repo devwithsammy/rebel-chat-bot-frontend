@@ -1,7 +1,15 @@
-// tailwind.config.js
+import plugin from 'tailwindcss/plugin'
+
 module.exports = {
   darkMode: "class", // Enable class-based dark mode
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+
+  plugins: [
+    plugin(function({addVariant}){
+        addVariant('hover-focus', ['&:hover', '&:focus'])
+    })
+  ],
+  
   theme: {
     extend: {
       colors: {
@@ -19,5 +27,6 @@ module.exports = {
         },
       },
     },
-  },
+},
+
 };

@@ -27,11 +27,19 @@ const checkUserAgentMobile = (): boolean => {
 };
 
 export const useDeviceInfo = (): DeviceInfo => {
-  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>({
-    isMobile: false,
-    innerWidth: 0,
-    // userAgentMobile: false,
-  });
+    const getInitialDeviceInfo = ():DeviceInfo => {
+        if (typeof window === 'undefined'){ 
+            return { 
+                isMobile: false, 
+                innerWidth : 0  , 
+            }
+        }
+        return { 
+            isMobile : window.innerWidth<=MOBILE_BREAKPOINT || checkUserAgentMobile(), 
+            innerWidth : window.innerWidth
+        }
+    }
+  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>(getInitialDeviceInfo);
 
   useEffect(() => {
     const updateDeviceInfo = () => {

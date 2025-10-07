@@ -26,7 +26,7 @@ export default function ChatArea() {
       <div className="text-xl md:text-2xl font-light text-gray-700/80 mt-8 font-nunito  tracking-wider">
         {getRandomGreeting(rebelGreetings)}
       </div>
-      <div className="mt-20 mb-auto shadow-sm shadow-gray-300 w-full rounded-[15px] max-w-[650px] p-4 flex gap-4 items-baseline">
+      <div className="mt-20 mb-auto shadow-sm shadow-gray-300 w-full rounded-[15px] max-w-[650px] p-4 flex gap-4 items-baseline bg-gray-50">
         <textarea
           ref={textareaRef}
           onInput={handleInput}

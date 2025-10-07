@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@config "../../tailwind.config.js" ; 
-
+@config "../../tailwind.config.js";
 
 :root {
   --c-background: #ffffff;
@@ -11,7 +10,7 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  
+
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -92,6 +91,59 @@ body {
   /* 200 to 800 font weight */
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
+}
+
+.gradient-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.gradient-scrollbar::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  border-radius: 10px;
+}
+.gradient-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #cbd5e1, #94a3b8);
+  border-radius: 10px;
+  border: 2px solid #f8fafc;
+}
+.gradient-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #94a3b8, #64748b);
+}
+
+.glass-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.glass-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 4px 0;
+}
+.glass-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.glass-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Firefox support */
+.glass-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+}
+
+.floating-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.floating-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.floating-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.floating-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 * {

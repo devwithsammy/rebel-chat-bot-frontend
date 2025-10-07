@@ -1,4 +1,5 @@
 "use client";
+import { FaLightbulb, FaMoon } from "react-icons/fa6";
 
 import { ThemeContextType, useTheme } from "@src/contexts/ThemeHandler";
 
@@ -12,15 +13,16 @@ export default function Nav() {
     console.log("Theme toggled");
     toggleTheme();
   };
-  return null ; 
+  // return null ;
+  const darkMode = theme == "dark";
   return (
-    <nav className="p-4 flex  bg-[#f7f7f7] text-gray-800 dark:bg-primary-900 dark:text-foreground-dark ">
+    <nav className="p-4 flex   fixed top-0 right-0">
       <button
-        className="ml-auto p-2 bg-gray-700 rounded hover:bg-gray-600"
         onClick={_handleThemeToggle}
+        className="p-3 rounded-full cursor-pointer bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
+        aria-label="Toggle theme"
       >
-        {/* theme toggle button  */}
-        Toggle Theme
+        {!darkMode ? <FaMoon /> : <FaLightbulb />}
       </button>
     </nav>
   );

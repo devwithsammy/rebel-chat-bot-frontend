@@ -12,6 +12,7 @@
     "axios": "^1.12.2",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
+    "framer-motion": "^12.23.22",
     "next": "15.5.4",
     "nextjs-toploader": "^3.9.17",
     "react": "19.1.0",
