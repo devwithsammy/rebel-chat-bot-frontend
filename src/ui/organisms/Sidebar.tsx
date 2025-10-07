@@ -30,7 +30,7 @@ export const Sidebar = () => {
     console.log(sidebar, 'SIDEBAR ON MOUNT')
   return (
     <div
-      className={`bg-slate-50 dark:bg-zinc-800 border-r border-r-zinc-300 flex flex-col dark:text-slate-100 text-slate-800 h-dvh max-h-dvh px-4 pb-8 overflow-y-scroll glass-scrollbar  ${
+      className={`bg-slate-50 dark:bg-zinc-800 border-r border-r-zinc-300 dark:border-r-zinc-600 flex flex-col dark:text-slate-100 text-slate-800 h-dvh max-h-dvh px-4 pb-8 overflow-y-scroll glass-scrollbar  ${
         sidebar ? "w-[250px] " : "w-min"
       } `}
     >
