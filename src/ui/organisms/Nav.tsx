@@ -4,7 +4,7 @@ import { FaLightbulb, FaMoon } from "react-icons/fa6";
 import { ThemeContextType, useTheme } from "@src/contexts/ThemeHandler";
 
 export default function Nav() {
-  const { theme, toggleTheme } = useTheme() as ThemeContextType;
+  const { theme, toggleTheme } = useTheme() ;
   console.log("Current Theme in Nav:", theme);
   // Example function to handle theme toggle
 

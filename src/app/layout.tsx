@@ -4,6 +4,8 @@ import NextTopLoader from "nextjs-toploader";
 import { ThemeProvider } from "@contexts/ThemeHandler";
 import { defaultMeta } from "@src/shared/meta";
 import { SidebarProvider } from "@contexts/SidebarContext";
+import {AuthProvider} from '@contexts/AuthContext'
+import { ModalProvider } from "@src/contexts/ModalContext";
 
 export const metadata: Metadata = {
   ...defaultMeta,
@@ -33,9 +35,14 @@ export default function RootLayout({
       </head>
       <body className={`antialiased`}>
         <NextTopLoader color="#808080" height={4} showSpinner={true} />
+        <AuthProvider>
+
         <ThemeProvider>
-          <SidebarProvider>{children}</SidebarProvider>
+          <ModalProvider>
+            <SidebarProvider>{children}</SidebarProvider>
+          </ModalProvider>
         </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

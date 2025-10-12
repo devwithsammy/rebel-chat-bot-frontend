@@ -1,14 +1,21 @@
 "use client";
+import { TfiLayoutSidebarLeft, TfiLayoutSidebarRight } from "react-icons/tfi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbLayoutSidebarRightExpand } from "react-icons/tb";
-import { SidebarInterface, useSidebar } from "@src/contexts/SidebarContext";
-import { FaArrowLeftLong, FaSpaghettiMonsterFlying } from "react-icons/fa6";
+import { ISidebar, useSidebar } from "@src/contexts/SidebarContext";
+import {
+  FaArrowLeftLong,
+  FaPlus,
+  FaSpaghettiMonsterFlying,
+} from "react-icons/fa6";
 import { useState } from "react";
 import { format, isToday, isYesterday, parseISO, subDays } from "date-fns";
 import useHistory from "@src/hooks/useHistory";
 import Image from "next/image";
 import { IconType } from "react-icons";
 import { BiLogOut, BiUser } from "react-icons/bi";
+import { useModal } from "@src/contexts/ModalContext";
+import { SettingsModal } from "./SettingsModal";
 // Function to format UTC timestamp
 const formatTimestamp = (utcTimestamp: string) => {
   const date = parseISO(utcTimestamp); // Parse UTC timestamp
@@ -22,18 +29,32 @@ const formatFullDate = (utcTimestamp: string) => {
 };
 
 export const Sidebar = () => {
-  const { sidebar, closeSidebar, openSidebar } =
-    useSidebar() as SidebarInterface;
+  const {
+    sidebar,
+    closeSidebar,
+    openSidebar,
+    updateSidebarPosition,
+    sidebarPosition,
+  } = useSidebar() ;
   const { groupedHistory, historyCount } = useHistory();
 
-  const [settingsModal, setSettingsModal] = useState(false);
-    console.log(sidebar, 'SIDEBAR ON MOUNT')
+  const { modal, updateModal, closeModal } = useModal();
+
+  console.log(sidebar, "SIDEBAR ON MOUNT");
+  console.log(modal);
+
   return (
     <div
       className={`bg-slate-50 dark:bg-zinc-800 border-r border-r-zinc-300 dark:border-r-zinc-600 flex flex-col dark:text-slate-100 text-slate-800 h-dvh max-h-dvh px-4 pb-8 overflow-y-scroll glass-scrollbar  ${
         sidebar ? "w-[250px] " : "w-min"
       } `}
     >
+      {modal.showModal && (
+        <SettingsModal
+          closeModal={() => closeModal()}
+          variant={modal.variant}
+        />
+      )}
       {!sidebar && (
         <div className="pt-4 flex justify-center">
           <SidebarTogglerBtn
@@ -57,6 +78,40 @@ export const Sidebar = () => {
             />
           </div>
 
+          <button className="p-3 py-2 rounded-sm cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center border-1 border-zinc-700 darl:border-zinc-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ">
+            <FaPlus />
+            <span>New Chat</span>
+          </button>
+          <div className="font-nunito-sans tracking-wide text-primary-600 font-medium">
+            Sidebar position
+          </div>
+          <div>
+            {[
+              {
+                label: "Left",
+                Icon: TfiLayoutSidebarLeft,
+                handler: () =>
+                  sidebarPosition == "left"
+                    ? null
+                    : updateSidebarPosition("left"),
+              },
+              {
+                label: "Right",
+                Icon: TfiLayoutSidebarRight,
+                handler: () =>
+                  sidebarPosition == "right"
+                    ? null
+                    : updateSidebarPosition("right"),
+              },
+            ].map(({ label, Icon, handler }, i) => {
+              return (
+                <button key={label} className="flex ">
+                  <span>{label}</span>
+                  <Icon />
+                </button>
+              );
+            })}
+          </div>
           <div className="mt-16">
             {/* chat history */}
             <p className="font-semibold text-gray-700 dark:text-zinc-300 font-nunito">
@@ -84,10 +139,23 @@ export const Sidebar = () => {
         </div>
       )}
       <div className="mt-auto pt-4 flex flex-col gap-2">
-        <SettingsCtaButton handler={() => setSettingsModal(true)} />
+        <SettingsCtaButton
+          handler={() =>
+            updateModal({
+              showModal: !modal.showModal,
+              variant: !modal.variant ? "general-settings" : null,
+            })
+          }
+        />
         <UserAccountCta
-          logout={() => console.log("clicked logout")}
-          openSettingsModal={() => setSettingsModal(true)}
+          //   logout={() => console.log("clicked logout")}
+
+          handler={() =>
+            updateModal({
+              showModal: !modal.showModal,
+              variant: !modal.variant ? "profile-settings" : null,
+            })
+          }
         />
       </div>
     </div>
@@ -142,34 +210,37 @@ const SidebarTogglerBtn = ({
 );
 
 const SettingsCtaButton = (p: { handler: () => void }) => {
-    const { sidebar } = useSidebar() as SidebarInterface;
+  const { sidebar } = useSidebar() as ISidebar;
 
   return (
     <div
       onClick={p.handler}
-        className={`w-full cursor-pointer flex items-center border-2  dark:shadow-zinc-700 border-transparent shadow-sm  hover-focus:border-primary-500  rounded-3xl gap-2 font-nunito
+      className={`w-full cursor-pointer flex items-center border-2  dark:shadow-zinc-700 border-transparent shadow-sm  hover-focus:border-primary-500  rounded-3xl gap-2 font-nunito
         ${sidebar ? " px-2 py-1 " : ""}
-        `}    >
+        `}
+    >
       <div className="w-10 h-10 flex items-center justify-center rounded-full  shadow-sm shadow-zinc-400 dark:shadow-slate-300">
         <IoSettingsOutline className="text-xl" />
       </div>
-     {sidebar&& <div>
-        <span className="font-semibold tracking-wide">Settings</span>
-      </div>}
+      {sidebar && (
+        <div>
+          <span className="font-semibold tracking-wide">Settings</span>
+        </div>
+      )}
     </div>
   );
 };
 
 const UserAccountCta = (p: {
-  openSettingsModal: () => void;
-  logout: () => void;
+  handler: () => void;
+  //   logout: () => void;
 }) => {
-  const [dropdown, setDropdown] = useState(false);
-  const { sidebar } = useSidebar() as SidebarInterface;
+  //   const [dropdown, setDropdown] = useState(false);
+  const { sidebar } = useSidebar() as ISidebar;
   return (
     <div className="">
       <button
-        onClick={() => setDropdown((x) => !x)}
+        onClick={p.handler}
         className={`w-full cursor-pointer flex items-center border-2  dark:shadow-zinc-700 border-transparent shadow-sm  hover-focus:border-primary-500  rounded-3xl gap-2 font-nunito
             ${sidebar ? " px-2 py-1 " : ""}
             `}
@@ -187,8 +258,8 @@ const UserAccountCta = (p: {
           </div>
         )}
       </button>
-      {true && (
-        <div className="fixed top-0 right-0 w-[400px] p-4 rounded-sm border-1 translate-y-[-100px] translate-x-[400px] z-10 flex flex-col bg-red-500">
+      {/* {true && (
+        <div className="absolute top-0 right-0 w-[400px] p-4 rounded-sm border-1 translate-y-[-100px] translate-x-[400px] z-10 flex flex-col bg-red-500">
           <UserAccountDropDownBtn
             Icon={BiUser}
             label="sampleuser@gmail.com"
@@ -202,21 +273,21 @@ const UserAccountCta = (p: {
             handler={() => {}}
           />{" "}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
 
-const UserAccountDropDownBtn = (p: {
-  Icon: IconType;
-  label: string;
-  handler: () => void;
-  title?: string;
-}) => {
-  return (
-    <button onClick={p.handler} title={p.title}>
-      <p.Icon />
-      <span>{p.label}</span>
-    </button>
-  );
-};
+// const UserAccountDropDownBtn = (p: {
+//   Icon: IconType;
+//   label: string;
+//   handler: () => void;
+//   title?: string;
+// }) => {
+//   return (
+//     <button onClick={p.handler} title={p.title}>
+//       <p.Icon />
+//       <span>{p.label}</span>
+//     </button>
+//   );
+// };

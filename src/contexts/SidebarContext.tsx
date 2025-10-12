@@ -1,14 +1,19 @@
 "use client";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
+
 import { createContext, useContext, useState } from "react";
 
-export interface SidebarInterface {
+
+type TSidebarPosition= "left"| "right"
+export interface ISidebar {
   sidebar: boolean;
+  sidebarPosition : TSidebarPosition;
   openSidebar: () => void;
   closeSidebar: () => void;
+  updateSidebarPosition:(a: TSidebarPosition) => void;
 }
 
-const sidebarContext = createContext<SidebarInterface | null>(null);
+const SidebarContext = createContext<ISidebar | null>(null);
 
 export const SidebarProvider = ({
   children,
@@ -16,33 +21,35 @@ export const SidebarProvider = ({
   children: React.ReactNode;
 }) => {
   const { isMobile, innerWidth } = useDeviceInfo();
-console.log({isMobile, innerWidth})
+  const [sidebarPosition , setSidebarPosition]  = useState<TSidebarPosition>("left")
   const [sidebar, setSidebar] = useState(
     isMobile || innerWidth < 768 ? false : true
   );
   const openSidebar = () => {
     setSidebar(true);
   };
-  const closeSidebar = () => { 
-    setSidebar(false)
-  }
-  
+  const closeSidebar = () => {
+    setSidebar(false);
+  };
+const updateSidebarPosition = (position: TSidebarPosition) => setSidebarPosition(position); 
   return (
-    <sidebarContext.Provider
+    <SidebarContext.Provider
       value={{
         sidebar,
         openSidebar,
         closeSidebar,
+        sidebarPosition,
+        updateSidebarPosition,
       }}
     >
       {children}
-    </sidebarContext.Provider>
+    </SidebarContext.Provider>
   );
 };
 
 export const useSidebar = () => {
-  const context = useContext(sidebarContext);
-  if (context === undefined) {
+  const context = useContext(SidebarContext);
+  if (!context ) {
     throw new Error("useSidebar must be used within a SidebarProvider");
   }
   return context;

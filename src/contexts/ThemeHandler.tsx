@@ -13,7 +13,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(
-    !(typeof window !== undefined && "matchMedia" in window)
+    !(typeof window !== undefined )
       ? "light"
       : window?.matchMedia("(prefers-color-scheme: dark)")?.matches
       ? "dark"
@@ -86,7 +86,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
+  if (!context ) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
