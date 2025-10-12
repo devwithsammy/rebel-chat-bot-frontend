@@ -1,7 +1,8 @@
 "use client";
 import { TfiLayoutSidebarLeft, TfiLayoutSidebarRight } from "react-icons/tfi";
 import { IoSettingsOutline } from "react-icons/io5";
-import { TbLayoutSidebarRightExpand } from "react-icons/tb";
+import { TbLayoutSidebarRightExpand ,TbBoxAlignLeftFilled,TbBoxAlignRightFilled} from "react-icons/tb";
+
 import { ISidebar, useSidebar } from "@src/contexts/SidebarContext";
 import {
   FaArrowLeftLong,
@@ -78,18 +79,21 @@ export const Sidebar = () => {
             />
           </div>
 
-          <button className="p-3 py-2 rounded-sm cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center border-1 border-zinc-700 darl:border-zinc-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ">
+          <button 
+          className="p-3 py-2 rounded-md cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
+          >
             <FaPlus />
             <span>New Chat</span>
           </button>
-          <div className="font-nunito-sans tracking-wide text-primary-600 font-medium">
-            Sidebar position
+          <div className="font-semibold text-gray-700 dark:text-zinc-300 font-nunito mb-4">
+            Sidebar Position
           </div>
-          <div>
+          <div className="flex justify-between">
             {[
               {
                 label: "Left",
-                Icon: TfiLayoutSidebarLeft,
+                Icon: TbBoxAlignLeftFilled,
+                isActive: sidebarPosition =='left',
                 handler: () =>
                   sidebarPosition == "left"
                     ? null
@@ -97,17 +101,23 @@ export const Sidebar = () => {
               },
               {
                 label: "Right",
-                Icon: TfiLayoutSidebarRight,
+                Icon: TbBoxAlignRightFilled,
+                isActive: sidebarPosition =='right',
                 handler: () =>
                   sidebarPosition == "right"
                     ? null
                     : updateSidebarPosition("right"),
               },
-            ].map(({ label, Icon, handler }, i) => {
+            ].map(({ label, Icon, handler,isActive }, i) => {
               return (
-                <button key={label} className="flex ">
+                <button key={label} 
+                onClick={handler}
+                
+                className={`p-3 py-2 rounded-lg cursor-pointer tracking-wide font-semibold flex flex-row gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 ${isActive? "ring-2":''} ring-blue-500 shadow-lg hover:shadow-xl transform `}
+
+                >
                   <span>{label}</span>
-                  <Icon />
+                  <Icon className="text-primary-500" />
                 </button>
               );
             })}

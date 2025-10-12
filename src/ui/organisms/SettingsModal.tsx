@@ -9,6 +9,8 @@ import { useState } from "react";
 import { FaLightbulb, FaMoon } from "react-icons/fa6";
 import { useTheme } from "@src/contexts/ThemeHandler";
 import { useAuth } from "@src/contexts/AuthContext";
+import { useSidebar } from "@src/contexts/SidebarContext";
+import { TbBoxAlignLeftFilled,TbBoxAlignRightFilled} from "react-icons/tb";
 
 export const SettingsModal = ({
   closeModal,
@@ -107,6 +109,7 @@ export const ModalSidebarBtn = ({
 
 const GeneralSettingsContent = () => {
   const { theme, toggleTheme, setTheme } = useTheme();
+  const {sidebarPosition, updateSidebarPosition} = useSidebar(); 
   const isDarkMode = theme == "dark";
   return (
     <div className="">
@@ -141,6 +144,45 @@ const GeneralSettingsContent = () => {
             );
           })}
         </div>
+
+                 
+                  <h2 className="mt-8 mb-2 text-base tracking-wide font-semibold text-gray-800 dark:text-white ">
+                  Sidebar Position
+        </h2>
+                  <div className="flex justify-between gap-4">
+                    {[
+                      {
+                        label: "Left",
+                        Icon: TbBoxAlignLeftFilled,
+                        isActive: sidebarPosition =='left',
+                        handler: () =>
+                          sidebarPosition == "left"
+                            ? null
+                            : updateSidebarPosition("left"),
+                      },
+                      {
+                        label: "Right",
+                        Icon: TbBoxAlignRightFilled,
+                        isActive: sidebarPosition =='right',
+                        handler: () =>
+                          sidebarPosition == "right"
+                            ? null
+                            : updateSidebarPosition("right"),
+                      },
+                    ].map(({ label, Icon, handler,isActive }, i) => {
+                      return (
+                        <button key={label} 
+                        onClick={handler}
+                        
+                        className={`p-3 py-2 basis-[50%] rounded-lg cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 ${isActive? "ring-2":''} ring-blue-500 shadow-lg hover:shadow-xl transform `}
+        
+                        >
+                          <span>{label}</span>
+                          <Icon className="text-primary-500" />
+                        </button>
+                      );
+                    })}
+                  </div>
         {/* <FaMoon /> */}
       </div>
     </div>
