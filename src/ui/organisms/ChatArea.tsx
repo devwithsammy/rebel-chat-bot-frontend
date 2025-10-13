@@ -2,7 +2,7 @@
 import { CiLocationArrow1 } from "react-icons/ci";
 import { BsSendArrowUp } from "react-icons/bs";
 import { VscSend } from "react-icons/vsc";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { getRandomGreeting } from "@src/utils/rebelGreetings";
 import rebelGreetings from "@src/data/rebelGreetings";
 
@@ -16,6 +16,7 @@ export default function ChatArea() {
       el.style.height = el.scrollHeight + "px";
     }
   };
+  const randomGreeting = useMemo(() => getRandomGreeting(rebelGreetings), []) 
   return (
     <div className="text-3xl px-4 bg-slate-100 dark:bg-zinc-700 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-10 pb-20">
       <div className="flex justify-center mt-auto">
@@ -23,8 +24,8 @@ export default function ChatArea() {
           {process.env.NEXT_PUBLIC_APP_NAME} 😒
         </h4>
       </div>
-      <div className="text-xl md:text-2xl font-light text-gray-700/80 dark:text-slate-200 mt-8 font-nunito  tracking-wider">
-        {getRandomGreeting(rebelGreetings)}
+      <div className="text-xl md:text-2xl font-light text-gray-700/80 dark:text-slate-200 mt-8 font-nunito  tracking-wider text-center">
+        {randomGreeting}
       </div>
       <div className="mt-20 mb-auto shadow-sm shadow-gray-300 dark:shadow-none border-1  border-transparent dark:border-neutral-500 w-full rounded-[15px] max-w-[650px] p-4 flex gap-4 items-baseline bg-gray-50 dark:bg-zinc-600">
         <textarea

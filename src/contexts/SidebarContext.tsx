@@ -1,7 +1,7 @@
 "use client";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState ,useEffect} from "react";
 
 
 type TSidebarPosition= "left"| "right"
@@ -15,13 +15,28 @@ export interface ISidebar {
 
 const SidebarContext = createContext<ISidebar | null>(null);
 
+const SIDEBAR_POSITION_KEY = "sidebar-position";
+
 export const SidebarProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
+
+    const getInitialPosition = (): TSidebarPosition => {
+        if (typeof window === "undefined") return "left";
+        
+        try {
+          const savedPosition = localStorage.getItem(SIDEBAR_POSITION_KEY) as TSidebarPosition;
+          return savedPosition || "left";
+        } catch (error) {
+          console.error("Error reading sidebar position from localStorage:", error);
+          return "left";
+        }
+      };
+
   const { isMobile, innerWidth } = useDeviceInfo();
-  const [sidebarPosition , setSidebarPosition]  = useState<TSidebarPosition>("left")
+  const [sidebarPosition , setSidebarPosition]  = useState<TSidebarPosition>(getInitialPosition)
   const [sidebar, setSidebar] = useState(
     isMobile || innerWidth < 768 ? false : true
   );
@@ -31,6 +46,14 @@ export const SidebarProvider = ({
   const closeSidebar = () => {
     setSidebar(false);
   };
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(SIDEBAR_POSITION_KEY, sidebarPosition);
+    } catch (error) {
+      console.error("Error saving sidebar position to localStorage:", error);
+    }
+  }, [sidebarPosition]);
 const updateSidebarPosition = (position: TSidebarPosition) => setSidebarPosition(position); 
   return (
     <SidebarContext.Provider

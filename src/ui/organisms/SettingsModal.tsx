@@ -96,8 +96,9 @@ export const ModalSidebarBtn = ({
   return (
     <button
       onClick={handler}
+
       title={label}
-      className="p-3 py-2 rounded-lg cursor-pointer tracking-wide font-semibold flex flex-row gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
+      className={`p-3 py-2 rounded-lg cursor-pointer tracking-wide font-semibold flex flex-row gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? 'ring-blue-500':'ring-transparent'} `}
 
       //   className="flex flex-row items-center gap-2 cursor-pointer py-2 hover:bg-zinc-300"
     >
@@ -123,19 +124,21 @@ const GeneralSettingsContent = () => {
             {
               label: "light",
               Icon: FaLightbulb,
+              isActive: theme =='light',
               handler: () => (!isDarkMode ? null : setTheme("light")),
             },
             {
               label: "dark",
+              isActive: theme =='dark',
               Icon: FaMoon,
               handler: () => (isDarkMode ? null : setTheme("dark")),
             },
-          ].map(({ label, Icon, handler }, i) => {
+          ].map(({ label, Icon, handler,isActive }, i) => {
             return (
               <button
                 key={label}
                 onClick={handler}
-                className="p-3 py-4 rounded-sm cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center basis-[50%] w-full  bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
+                className={`p-3 py-4 rounded-sm cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center basis-[50%] w-full  bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? 'ring-blue-500':'ring-transparent'} `}
                 aria-label="Activate light mode"
               >
                 <span>{label}</span>
@@ -197,7 +200,7 @@ const ProfileSettingsContent = () => {
       {[
         {
           label: "Name",
-          value: "Sample USer",
+          value: "Sample User",
         },
         {
           label: "Email",
