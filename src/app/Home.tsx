@@ -6,12 +6,16 @@ import { Sidebar } from "@src/ui/organisms/Sidebar";
 import { defaultMeta } from "@src/shared/meta";
 import { useSidebar } from "@src/contexts/SidebarContext";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
+import { useAuth } from "@src/contexts/AuthContext";
 
 export default function Home() {
   const { sidebarPosition } = useSidebar();
   const { isMobile, innerWidth } = useDeviceInfo();
   const isLeftSidebar = sidebarPosition == "left";
   const isOnSmallDevice = isMobile || innerWidth < 768;
+
+  const authContextValue = useAuth(); 
+  console.log(authContextValue)
   return (
     <div
       className={`grid grid-flow-row-dense  h-dvh max-h-dvh  ${

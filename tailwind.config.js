@@ -1,5 +1,4 @@
 import plugin from 'tailwindcss/plugin'
-
 module.exports = {
   darkMode: "class", // Enable class-based dark mode
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -12,6 +11,9 @@ module.exports = {
   
   theme: {
     extend: {
+        backgroundImage: {
+            'bubbles':"url(/images/bubbles.svg)"
+        },
       colors: {
         primary: {
           50: "#ebedfe",

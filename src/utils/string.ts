@@ -1,3 +1,3 @@
-export function getRandomGreeting(greetings:string[]):string  {
+export function getRandomString(greetings: string[]): string {
   return greetings[Math.floor(Math.random() * greetings.length)];
 }

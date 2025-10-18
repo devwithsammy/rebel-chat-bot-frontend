@@ -31,7 +31,6 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/* end loading of fonts */}
-        <script></script>
       </head>
       <body className={`antialiased`}>
         <NextTopLoader color="#808080" height={4} showSpinner={true} />

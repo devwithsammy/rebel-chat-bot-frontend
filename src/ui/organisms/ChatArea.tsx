@@ -3,7 +3,7 @@ import { CiLocationArrow1 } from "react-icons/ci";
 import { BsSendArrowUp } from "react-icons/bs";
 import { VscSend } from "react-icons/vsc";
 import { useMemo, useRef } from "react";
-import { getRandomGreeting } from "@src/utils/rebelGreetings";
+import { getRandomString } from "@src/utils/string";
 import rebelGreetings from "@src/data/rebelGreetings";
 
 export default function ChatArea() {
@@ -16,7 +16,7 @@ export default function ChatArea() {
       el.style.height = el.scrollHeight + "px";
     }
   };
-  const randomGreeting = useMemo(() => getRandomGreeting(rebelGreetings), []) 
+  const randomGreeting = useMemo(() => getRandomString(rebelGreetings), []);
   return (
     <div className="text-3xl px-4 bg-slate-100 dark:bg-zinc-700 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-10 pb-20">
       <div className="flex justify-center mt-auto">
@@ -27,7 +27,7 @@ export default function ChatArea() {
       <div className="text-xl md:text-2xl font-light text-gray-700/80 dark:text-slate-200 mt-8 font-nunito  tracking-wider text-center">
         {randomGreeting}
       </div>
-      <div className="mt-20 mb-auto shadow-sm shadow-gray-300 dark:shadow-none border-1  border-transparent dark:border-neutral-500 w-full rounded-[15px] max-w-[650px] p-4 flex gap-4 items-baseline bg-gray-50 dark:bg-zinc-600">
+      <div className="mt-20 mb-auto flex-col shadow-sm shadow-gray-300 dark:shadow-none border-1  border-transparent dark:border-neutral-500 w-full rounded-[15px] max-w-[650px] p-4 flex gap-4 items-baseline bg-gray-50 dark:bg-zinc-600">
         <textarea
           ref={textareaRef}
           onInput={handleInput}
@@ -35,7 +35,7 @@ export default function ChatArea() {
           placeholder="Whats on your mind? "
           className="w-full text-base focus:outline-none resize-none bg-transparent max-h-40 overflow-y-auto font-nunito focus:ring-1 p-2 rounded-[10px] ring-slate-500/10 text-gray-700 dark:text-slate-200 tracking-wider"
         />
-        <button className="translate-y-[2px] flex items-center justify-center h-10 w-10 border-none bg-primary-500 rounded-full transition-all cursor-pointer hover:ring-1 focus:ring-1 focus:outline-none ring-slate-500/50  ring-offset-2">
+        <button className="self-end translate-y-[2px] flex items-center justify-center h-10 w-10 border-none bg-primary-500 rounded-full transition-all cursor-pointer hover:ring-1 focus:ring-1 focus:outline-none ring-slate-500/50  ring-offset-2">
           <CiLocationArrow1 className="text-xl text-slate-100 " />
         </button>
       </div>
