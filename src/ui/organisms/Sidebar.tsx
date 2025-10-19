@@ -2,7 +2,7 @@
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbBoxAlignLeftFilled, TbBoxAlignRightFilled } from "react-icons/tb";
 
-import { ISidebar, useSidebar } from "@src/contexts/SidebarContext";
+import { useSidebar } from "@src/contexts/SidebarContext";
 import { FaPlus } from "react-icons/fa6";
 import { format, parseISO } from "date-fns";
 
@@ -180,24 +180,28 @@ export const Sidebar = () => {
             </div>
           </div>
         )}
-        <div className=" pt-4 flex flex-col gap-2 absolute bottom-0 left-0 w-full px-4 py-4">
-          <SettingsCtaButton
-            handler={() =>
-              updateModal({
-                showModal: !modal.showModal,
-                variant: !modal.variant ? "general-settings" : null,
-              })
-            }
-          />
-          <UserAccountCta
-            handler={() =>
-              updateModal({
-                showModal: !modal.showModal,
-                variant: !modal.variant ? "profile-settings" : null,
-              })
-            }
-          />
-        </div>
+        {sidebar && (
+          <div className=" pt-4 flex flex-col gap-2 absolute bottom-0 left-0 w-full px-4 py-4">
+            <SidebarCtaButton
+              variant="settings"
+              handler={() =>
+                updateModal({
+                  showModal: !modal.showModal,
+                  variant: !modal.variant ? "general-settings" : null,
+                })
+              }
+            />
+            <SidebarCtaButton
+              variant="profile"
+              handler={() =>
+                updateModal({
+                  showModal: !modal.showModal,
+                  variant: !modal.variant ? "profile-settings" : null,
+                })
+              }
+            />
+          </div>
+        )}
       </div>
     </>
   );
@@ -230,61 +234,37 @@ const SearchSection = ({
   );
 };
 
-const SettingsCtaButton = (p: { handler: () => void }) => {
-  const { sidebar } = useSidebar();
-
-  return (
-    <div
-      onClick={p.handler}
-      className={`w-full cursor-pointer flex items-center border-2  dark:shadow-zinc-700 border-transparent shadow-sm  hover-focus:border-primary-500  rounded-3xl gap-2 font-nunito
-        ${sidebar ? " px-2 py-1 " : ""}
-        `}
-    >
-      <div className="w-10 h-10 flex items-center justify-center rounded-full  shadow-sm shadow-zinc-400 dark:shadow-slate-300">
-        <IoSettingsOutline className="text-xl" />
-      </div>
-      {sidebar && (
-        <div>
-          <span className="font-semibold tracking-wide">Settings</span>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const UserAccountCta = (p: {
+const SidebarCtaButton = (p: {
   handler: () => void;
-  //   logout: () => void;
+  variant: "profile" | "settings";
 }) => {
-  //   const [dropdown, setDropdown] = useState(false);
-  const { sidebar } = useSidebar() as ISidebar;
   const { user } = useAuth();
   if (!user) return null;
   return (
-    <div className="">
-      <button
-        onClick={p.handler}
-        className={`w-full cursor-pointer flex items-center border-2  dark:shadow-zinc-700 border-transparent shadow-sm  hover-focus:border-primary-500  rounded-3xl gap-2 font-nunito
-            ${sidebar ? " px-2 py-1 " : ""}
-            `}
-      >
-        <div className="w-10 h-10 overflow-hidden rounded-full shadow-sm shadow-zinc-800 dark:shadow-slate-300">
+    <div
+      onClick={p.handler}
+      className={`w-full cursor-pointer flex items-center border  dark:border-zinc-700 border-zinc-300  shadow-sm  hover-focus:border-primary-500  rounded-full gap-4 font-nunito
+        py-2 px-3 max-w-[130px] mx-auto
+          `}
+    >
+      <div className="w-6 h-6 overflow-hidden rounded-full flex items-center justify-center">
+        {p.variant == "settings" ? (
+          <IoSettingsOutline className="text-xl" />
+        ) : (
           <Image
-            src={ `/images/sampleUser.jpg`}
+            src={`/images/sampleUser.jpg`}
             alt={user?.firstName || ""}
             width={40}
             height={40}
             className="h-full w-full object-cover"
           />
-        </div>
-        {sidebar && (
-          <div className="flex flex-col items-start">
-            <span className="font-semibold tracking-wide">
-              {user?.firstName}
-            </span>
-          </div>
         )}
-      </button>
+      </div>
+      <div>
+        <div className="font-semibold tracking-wide text-sm text-left">
+          {p.variant == "settings" ? "Settings" : user?.firstName || "Profile"}
+        </div>
+      </div>
     </div>
   );
 };
