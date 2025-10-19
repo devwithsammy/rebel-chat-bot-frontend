@@ -1,5 +1,5 @@
 import searchHistory from "@data/chatHistory";
-import { format, isToday, isYesterday, parseISO, subDays } from "date-fns";
+import {  isToday, isYesterday, parseISO, subDays } from "date-fns";
 
 const useHistory = () => {
   // Sort and group history

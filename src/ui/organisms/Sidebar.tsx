@@ -1,28 +1,18 @@
 "use client";
-import { TfiLayoutSidebarLeft, TfiLayoutSidebarRight } from "react-icons/tfi";
 import { IoSettingsOutline } from "react-icons/io5";
-import {
-  TbLayoutSidebarRightExpand,
-  TbBoxAlignLeftFilled,
-  TbBoxAlignRightFilled,
-} from "react-icons/tb";
+import { TbBoxAlignLeftFilled, TbBoxAlignRightFilled } from "react-icons/tb";
 
 import { ISidebar, useSidebar } from "@src/contexts/SidebarContext";
-import {
-  FaArrowLeftLong,
-  FaPlus,
-  FaSpaghettiMonsterFlying,
-} from "react-icons/fa6";
-import { useState } from "react";
-import { format, isToday, isYesterday, parseISO, subDays } from "date-fns";
-import useHistory from "@src/hooks/useHistory";
-import Image from "next/image";
-import { IconType } from "react-icons";
-import { BiLogOut, BiUser } from "react-icons/bi";
+import { FaPlus } from "react-icons/fa6";
+import { format, parseISO } from "date-fns";
+
 import { useModal } from "@src/contexts/ModalContext";
 import { SettingsModal } from "./SettingsModal";
 import { SidebarTogglerBtn } from "../atoms/sidebarButtons";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
+import { useAuth } from "@src/contexts/AuthContext";
+import useHistory from "@src/hooks/useHistory";
+import Image from "next/image";
 
 // Function to format UTC timestamp
 const formatTimestamp = (utcTimestamp: string) => {
@@ -61,15 +51,15 @@ export const Sidebar = () => {
           className="
             fixed inset-0 z-[90]  top-0 left-0
             w-dvw h-dvh
-            backdrop-blur-sm bg-black/30 
+            backdrop-blur-sm bg-black/30
             transition-opacity duration-300 ease-in-out
           "
         ></div>
       )}
       <div
         className={`
-        bg-slate-50 dark:bg-zinc-800 border-r border-r-zinc-300 dark:border-r-zinc-600 
-        flex flex-col dark:text-slate-100 text-slate-800 h-dvh max-h-dvh px-4 pb-8  
+        bg-slate-50 dark:bg-zinc-800 border-r border-r-zinc-300 dark:border-r-zinc-600
+        flex flex-col dark:text-slate-100 text-slate-800 h-dvh max-h-dvh px-4 pb-8
         transition-all duration-300 ease-in-out
         ${isOnSmallDevice ? " fixed top-0 z-[100] " : " relative "}
         ${
@@ -107,7 +97,7 @@ export const Sidebar = () => {
                 sidebarPosition == "right" ? " flex-row-reverse " : " flex-row "
               }`}
             >
-                {/* header  */}
+              {/* header  */}
               <h2 className=" uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg">
                 {process.env.NEXT_PUBLIC_APP_NAME}
               </h2>
@@ -149,7 +139,7 @@ export const Sidebar = () => {
               ].map(({ label, Icon, handler, isActive }, i) => {
                 return (
                   <button
-                    key={label}
+                    key={`${label} ${i}`}
                     onClick={handler}
                     className={`p-3 py-2 rounded-lg cursor-pointer tracking-wide font-semibold flex flex-row gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 ${
                       isActive ? "ring-2" : ""
@@ -167,7 +157,7 @@ export const Sidebar = () => {
                 Chat History
               </p>
 
-              <div className="mt-4 px-2 h-[60vh] overflow-y-scroll glass-scrollbar ">
+              <div className="mt-4 px-2 h-[58vh] overflow-y-scroll glass-scrollbar ">
                 <SearchSection title={"Today"} items={groupedHistory.today} />
                 <SearchSection
                   title={"Yesterday"}
@@ -190,7 +180,7 @@ export const Sidebar = () => {
             </div>
           </div>
         )}
-        <div className=" pt-4 flex flex-col gap-2 absolute bottom-0 left-0">
+        <div className=" pt-4 flex flex-col gap-2 absolute bottom-0 left-0 w-full px-4 py-4">
           <SettingsCtaButton
             handler={() =>
               updateModal({
@@ -200,8 +190,6 @@ export const Sidebar = () => {
             }
           />
           <UserAccountCta
-            //   logout={() => console.log("clicked logout")}
-
             handler={() =>
               updateModal({
                 showModal: !modal.showModal,
@@ -243,7 +231,7 @@ const SearchSection = ({
 };
 
 const SettingsCtaButton = (p: { handler: () => void }) => {
-  const { sidebar } = useSidebar() as ISidebar;
+  const { sidebar } = useSidebar();
 
   return (
     <div
@@ -270,6 +258,8 @@ const UserAccountCta = (p: {
 }) => {
   //   const [dropdown, setDropdown] = useState(false);
   const { sidebar } = useSidebar() as ISidebar;
+  const { user } = useAuth();
+  if (!user) return null;
   return (
     <div className="">
       <button
@@ -280,47 +270,21 @@ const UserAccountCta = (p: {
       >
         <div className="w-10 h-10 overflow-hidden rounded-full shadow-sm shadow-zinc-800 dark:shadow-slate-300">
           <Image
-            src={require("@assets/sampleUser.jpg")}
-            alt={"Sample- user"}
+            src={ `/images/sampleUser.jpg`}
+            alt={user?.firstName || ""}
+            width={40}
+            height={40}
             className="h-full w-full object-cover"
           />
         </div>
         {sidebar && (
           <div className="flex flex-col items-start">
-            <span className="font-semibold tracking-wide">Andrew Jackson</span>
+            <span className="font-semibold tracking-wide">
+              {user?.firstName}
+            </span>
           </div>
         )}
       </button>
-      {/* {true && (
-        <div className="absolute top-0 right-0 w-[400px] p-4 rounded-sm border-1 translate-y-[-100px] translate-x-[400px] z-10 flex flex-col bg-red-500">
-          <UserAccountDropDownBtn
-            Icon={BiUser}
-            label="sampleuser@gmail.com"
-            title="Sample-user"
-            handler={() => {}}
-          />{" "}
-          <UserAccountDropDownBtn
-            Icon={BiLogOut}
-            label="logout"
-            title="logout profile"
-            handler={() => {}}
-          />{" "}
-        </div>
-      )} */}
     </div>
   );
 };
-
-// const UserAccountDropDownBtn = (p: {
-//   Icon: IconType;
-//   label: string;
-//   handler: () => void;
-//   title?: string;
-// }) => {
-//   return (
-//     <button onClick={p.handler} title={p.title}>
-//       <p.Icon />
-//       <span>{p.label}</span>
-//     </button>
-//   );
-// };

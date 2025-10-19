@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
-import { ThemeProvider } from "@contexts/ThemeHandler";
+import { ThemeProvider } from "@src/contexts/ThemeContext";
 import { defaultMeta } from "@src/shared/meta";
 import { SidebarProvider } from "@contexts/SidebarContext";
-import {AuthProvider} from '@contexts/AuthContext'
+import { AuthProvider } from "@contexts/AuthContext";
 import { ModalProvider } from "@src/contexts/ModalContext";
 
 export const metadata: Metadata = {
@@ -35,12 +35,11 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <NextTopLoader color="#808080" height={4} showSpinner={true} />
         <AuthProvider>
-
-        <ThemeProvider>
-          <ModalProvider>
-            <SidebarProvider>{children}</SidebarProvider>
-          </ModalProvider>
-        </ThemeProvider>
+          <ThemeProvider>
+            <ModalProvider>
+              <SidebarProvider>{children}</SidebarProvider>
+            </ModalProvider>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

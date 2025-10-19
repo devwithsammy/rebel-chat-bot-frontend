@@ -7,10 +7,10 @@ import { TVariant, useModal } from "@src/contexts/ModalContext";
 import { IconType } from "react-icons";
 import { useState } from "react";
 import { FaLightbulb, FaMoon } from "react-icons/fa6";
-import { useTheme } from "@src/contexts/ThemeHandler";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useAuth } from "@src/contexts/AuthContext";
 import { useSidebar } from "@src/contexts/SidebarContext";
-import { TbBoxAlignLeftFilled,TbBoxAlignRightFilled} from "react-icons/tb";
+import { TbBoxAlignLeftFilled, TbBoxAlignRightFilled } from "react-icons/tb";
 
 export const SettingsModal = ({
   closeModal,
@@ -96,9 +96,8 @@ export const ModalSidebarBtn = ({
   return (
     <button
       onClick={handler}
-
       title={label}
-      className={`p-3 py-2 rounded-lg cursor-pointer tracking-wide font-semibold flex flex-row gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? 'ring-blue-500':'ring-transparent'} `}
+      className={`p-3 py-2 rounded-lg cursor-pointer tracking-wide font-semibold flex flex-row gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? "ring-blue-500" : "ring-transparent"} `}
 
       //   className="flex flex-row items-center gap-2 cursor-pointer py-2 hover:bg-zinc-300"
     >
@@ -110,7 +109,7 @@ export const ModalSidebarBtn = ({
 
 const GeneralSettingsContent = () => {
   const { theme, toggleTheme, setTheme } = useTheme();
-  const {sidebarPosition, updateSidebarPosition} = useSidebar(); 
+  const { sidebarPosition, updateSidebarPosition } = useSidebar();
   const isDarkMode = theme == "dark";
   return (
     <div className="">
@@ -124,21 +123,21 @@ const GeneralSettingsContent = () => {
             {
               label: "light",
               Icon: FaLightbulb,
-              isActive: theme =='light',
+              isActive: theme == "light",
               handler: () => (!isDarkMode ? null : setTheme("light")),
             },
             {
               label: "dark",
-              isActive: theme =='dark',
+              isActive: theme == "dark",
               Icon: FaMoon,
               handler: () => (isDarkMode ? null : setTheme("dark")),
             },
-          ].map(({ label, Icon, handler,isActive }, i) => {
+          ].map(({ label, Icon, handler, isActive }, i) => {
             return (
               <button
                 key={label}
                 onClick={handler}
-                className={`p-3 py-4 rounded-sm cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center basis-[50%] w-full  bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? 'ring-blue-500':'ring-transparent'} `}
+                className={`p-3 py-4 rounded-sm cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center basis-[50%] w-full  bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? "ring-blue-500" : "ring-transparent"} `}
                 aria-label="Activate light mode"
               >
                 <span>{label}</span>
@@ -148,44 +147,42 @@ const GeneralSettingsContent = () => {
           })}
         </div>
 
-                 
-                  <h2 className="mt-8 mb-2 text-base tracking-wide font-semibold text-gray-800 dark:text-white ">
-                  Sidebar Position
+        <h2 className="mt-8 mb-2 text-base tracking-wide font-semibold text-gray-800 dark:text-white ">
+          Sidebar Position
         </h2>
-                  <div className="flex justify-between gap-4">
-                    {[
-                      {
-                        label: "Left",
-                        Icon: TbBoxAlignLeftFilled,
-                        isActive: sidebarPosition =='left',
-                        handler: () =>
-                          sidebarPosition == "left"
-                            ? null
-                            : updateSidebarPosition("left"),
-                      },
-                      {
-                        label: "Right",
-                        Icon: TbBoxAlignRightFilled,
-                        isActive: sidebarPosition =='right',
-                        handler: () =>
-                          sidebarPosition == "right"
-                            ? null
-                            : updateSidebarPosition("right"),
-                      },
-                    ].map(({ label, Icon, handler,isActive }, i) => {
-                      return (
-                        <button key={label} 
-                        onClick={handler}
-                        
-                        className={`p-3 py-2 basis-[50%] rounded-lg cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 ${isActive? "ring-2":''} ring-blue-500 shadow-lg hover:shadow-xl transform `}
-        
-                        >
-                          <span>{label}</span>
-                          <Icon className="text-primary-500" />
-                        </button>
-                      );
-                    })}
-                  </div>
+        <div className="flex justify-between gap-4">
+          {[
+            {
+              label: "Left",
+              Icon: TbBoxAlignLeftFilled,
+              isActive: sidebarPosition == "left",
+              handler: () =>
+                sidebarPosition == "left"
+                  ? null
+                  : updateSidebarPosition("left"),
+            },
+            {
+              label: "Right",
+              Icon: TbBoxAlignRightFilled,
+              isActive: sidebarPosition == "right",
+              handler: () =>
+                sidebarPosition == "right"
+                  ? null
+                  : updateSidebarPosition("right"),
+            },
+          ].map(({ label, Icon, handler, isActive }, i) => {
+            return (
+              <button
+                key={label}
+                onClick={handler}
+                className={`p-3 py-2 basis-[50%] rounded-lg cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 ${isActive ? "ring-2" : ""} ring-blue-500 shadow-lg hover:shadow-xl transform `}
+              >
+                <span>{label}</span>
+                <Icon className="text-primary-500" />
+              </button>
+            );
+          })}
+        </div>
         {/* <FaMoon /> */}
       </div>
     </div>
@@ -194,21 +191,21 @@ const GeneralSettingsContent = () => {
 
 /* Profile Content */
 const ProfileSettingsContent = () => {
-  const { logout } = useAuth();
+  const { logout ,user } = useAuth();
   return (
     <div className="text-sm text-gray-700">
       {[
         {
           label: "Name",
-          value: "Sample User",
+          value:user?.firstName||'-',
         },
         {
           label: "Email",
-          value: "sampleuser@gmail.com",
+          value: user?.email||'-',
         },
         {
           label: "Phone number",
-          value: "",
+          value: '-',
         },
         {
           label: "Logout",
@@ -217,7 +214,9 @@ const ProfileSettingsContent = () => {
         },
       ].map(({ label, value, handler }, i) => {
         return (
-          <div className=" py-4 flex flex-row justify-between items-baseline font-nunito  ">
+          <div 
+            key={i}
+            className=" py-4 flex flex-row justify-between items-baseline font-nunito  ">
             <div className="font-semibold tracking-wide text-zinc-900 dark:text-zinc-200">
               {label}
             </div>

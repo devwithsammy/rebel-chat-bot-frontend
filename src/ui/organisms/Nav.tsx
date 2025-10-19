@@ -1,7 +1,7 @@
 "use client";
 import { FaLightbulb, FaMoon } from "react-icons/fa6";
 
-import { ThemeContextType, useTheme } from "@src/contexts/ThemeHandler";
+import { ThemeContextType, useTheme } from "@src/contexts/ThemeContext";
 import { useSidebar } from "@src/contexts/SidebarContext";
 import { SidebarTogglerBtn } from "../atoms/sidebarButtons";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";

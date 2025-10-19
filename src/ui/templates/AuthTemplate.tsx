@@ -1,8 +1,7 @@
 "use client";
 import { FcGoogle } from "react-icons/fc";
 import { ContinueWithCta } from "@src/ui/atoms/authButtons";
-import { getRandomString } from "@src/utils/string";
-import authPlaceholders from "@src/data/authPlaceholders";
+
 import { useAuth } from "@src/contexts/AuthContext";
 import { useSearchParams } from "next/navigation";
 
@@ -10,6 +9,7 @@ export function AuthTemplate() {
   const { loginWithGoogle } = useAuth();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
+
   return (
     <div className="w-dvw h-dvh py-[10vh] px-[5%] flex items-center justify-center bg-slate-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
       <div className="md:w-[500px] w-[90%] shadow-sm  dark:shadow-slate-700/50 p-8 py-16 rounded-[30px] flex flex-col items-center ">
@@ -25,7 +25,7 @@ export function AuthTemplate() {
             {...{
               label: "Continue with google",
               Icon: FcGoogle,
-              handler: () =>loginWithGoogle(),
+              handler: () => loginWithGoogle(),
             }}
           />
           <p className="font-semibold tracking-wide text-sm mb-2 mt-8">OR</p>

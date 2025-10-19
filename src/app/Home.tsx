@@ -1,12 +1,14 @@
 "use client";
-import { Metadata } from "next";
 import Nav from "@ui/organisms/Nav";
 import ChatArea from "@src/ui/organisms/ChatArea";
 import { Sidebar } from "@src/ui/organisms/Sidebar";
-import { defaultMeta } from "@src/shared/meta";
 import { useSidebar } from "@src/contexts/SidebarContext";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 import { useAuth } from "@src/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { AuthLoadingUI } from "@src/ui/atoms/authLoadingUI";
+import { AuthSuccessUI } from "@src/ui/atoms/authSuccessUI";
 
 export default function Home() {
   const { sidebarPosition } = useSidebar();
@@ -14,8 +16,29 @@ export default function Home() {
   const isLeftSidebar = sidebarPosition == "left";
   const isOnSmallDevice = isMobile || innerWidth < 768;
 
-  const authContextValue = useAuth(); 
-  console.log(authContextValue)
+  const { loading: loadingAuth, isAuthenticated } = useAuth();
+
+  const router = useRouter();
+  useEffect(() => {
+    if (!loadingAuth) {
+      if (!isAuthenticated) {
+        // Redirect to login page if not authenticated
+        router.push("/login");
+      } else {
+        // Optional: Redirect to a different page if user doesn't have required permissions
+      }
+    }
+  }, [loadingAuth, isAuthenticated, router]);
+  
+  if (loadingAuth) {
+    return <AuthLoadingUI />;
+  }
+
+  // Don't render the main content if not authenticated
+  if (!isAuthenticated) {
+    return <AuthSuccessUI />;
+  }
+
   return (
     <div
       className={`grid grid-flow-row-dense  h-dvh max-h-dvh  ${

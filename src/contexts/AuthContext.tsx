@@ -13,8 +13,10 @@ interface User {
   id: string;
   email: string;
   firstName: string;
-  lastName: string;
-  picture: string;
+  picture?: string;
+  createdAt?: string;
+  googleId?: string;
+  updatedAt?: string;
 }
 
 export interface IAuthContext {
@@ -37,9 +39,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     checkAuth();
   }, []);
+
   const checkAuth = async () => {
     try {
       const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+      console.log("token", token);
       if (token) {
         const response = await authAPI.getProfile();
         console.log(response, "response of get user");
@@ -47,8 +51,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (err) {
       console.log("Auth check failed", err);
-      localStorage.removeItem(ACCESS_TOKEN_KEY);
-      localStorage.removeItem(ACCESS_USER_KEY);
+      if (process.env.NEXT_PUBLIC_ENV == "production") {
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+
+        localStorage.removeItem(ACCESS_USER_KEY);
+      }
     } finally {
       setLoading(false);
     }
