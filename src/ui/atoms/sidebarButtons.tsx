@@ -1,6 +1,6 @@
 "use client"
 import { useSidebar } from "@src/contexts/SidebarContext";
-import { TbLayoutSidebarRightExpand ,TbBoxAlignLeftFilled,TbBoxAlignRightFilled} from "react-icons/tb";
+import { TbLayoutSidebarRightExpand ,} from "react-icons/tb";
 
 export const SidebarTogglerBtn = ({
   clickHandler,

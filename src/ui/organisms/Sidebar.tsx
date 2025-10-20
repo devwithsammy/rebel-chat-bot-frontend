@@ -252,7 +252,7 @@ const SidebarCtaButton = (p: {
           <IoSettingsOutline className="text-xl" />
         ) : (
           <Image
-            src={`/images/sampleUser.jpg`}
+            src={user?.picture||`/images/sampleUser.jpg`}
             alt={user?.firstName || ""}
             width={40}
             height={40}

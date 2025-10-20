@@ -1,7 +1,7 @@
 "use client";
 import { FaLightbulb, FaMoon } from "react-icons/fa6";
 
-import { ThemeContextType, useTheme } from "@src/contexts/ThemeContext";
+import {  useTheme } from "@src/contexts/ThemeContext";
 import { useSidebar } from "@src/contexts/SidebarContext";
 import { SidebarTogglerBtn } from "../atoms/sidebarButtons";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
@@ -9,7 +9,7 @@ import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 export default function Nav() {
   const { theme, toggleTheme } = useTheme();
 
-  const { sidebarPosition, sidebar, openSidebar, closeSidebar } = useSidebar();
+  const { sidebarPosition, sidebar, openSidebar,  } = useSidebar();
   const {isMobile, innerWidth} = useDeviceInfo() ; 
   const isLeftSidebar = sidebarPosition == "left";
   const _handleThemeToggle = () => {

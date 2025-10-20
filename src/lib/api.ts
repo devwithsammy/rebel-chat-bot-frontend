@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN_KEY, ACCESS_USER_KEY } from "../shared/constants";
+import { ACCESS_TOKEN_KEY,  } from "../shared/constants";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 

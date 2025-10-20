@@ -4,7 +4,7 @@ import {
   useContext,
   useState,
   createContext,
-  useEffect,
+  
 } from "react";
 
 export type TVariant = "general-settings" | "profile-settings" | null;

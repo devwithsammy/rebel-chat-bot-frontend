@@ -1,4 +1,4 @@
-export default [
+const authPlaceholders = [
     "Enter your top-secret alias",
     "Your email, if you still remember it",
     "We promise not to spam… much",
@@ -51,3 +51,4 @@ export default [
     "Okay genius, what’s your email?"
   ];
   
+export default authPlaceholders

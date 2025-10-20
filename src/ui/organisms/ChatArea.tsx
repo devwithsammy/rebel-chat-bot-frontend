@@ -1,13 +1,12 @@
 "use client";
 import { CiLocationArrow1 } from "react-icons/ci";
-import { BsSendArrowUp } from "react-icons/bs";
-import { VscSend } from "react-icons/vsc";
 import { useMemo, useRef } from "react";
 import { getRandomString } from "@src/utils/string";
 import rebelGreetings from "@src/data/rebelGreetings";
 
 export default function ChatArea() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     // const target = e.target as HTMLTextAreaElement;
     const el = textareaRef?.current;

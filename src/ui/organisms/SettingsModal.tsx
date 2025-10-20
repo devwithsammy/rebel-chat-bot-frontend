@@ -5,7 +5,6 @@ import { LuSettings } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
 import { TVariant, useModal } from "@src/contexts/ModalContext";
 import { IconType } from "react-icons";
-import { useState } from "react";
 import { FaLightbulb, FaMoon } from "react-icons/fa6";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useAuth } from "@src/contexts/AuthContext";
@@ -108,7 +107,7 @@ export const ModalSidebarBtn = ({
 };
 
 const GeneralSettingsContent = () => {
-  const { theme, toggleTheme, setTheme } = useTheme();
+  const { theme,  setTheme } = useTheme();
   const { sidebarPosition, updateSidebarPosition } = useSidebar();
   const isDarkMode = theme == "dark";
   return (
@@ -135,7 +134,7 @@ const GeneralSettingsContent = () => {
           ].map(({ label, Icon, handler, isActive }, i) => {
             return (
               <button
-                key={label}
+                key={`${label} ${i}`}
                 onClick={handler}
                 className={`p-3 py-4 rounded-sm cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center basis-[50%] w-full  bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none ring-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform ${isActive ? "ring-blue-500" : "ring-transparent"} `}
                 aria-label="Activate light mode"
@@ -173,7 +172,7 @@ const GeneralSettingsContent = () => {
           ].map(({ label, Icon, handler, isActive }, i) => {
             return (
               <button
-                key={label}
+                key={`${label}-${i}`}
                 onClick={handler}
                 className={`p-3 py-2 basis-[50%] rounded-lg cursor-pointer tracking-wide font-semibold flex flex-col-reverse gap-2 items-center  dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-300 focus:outline-none focus:ring-2 ${isActive ? "ring-2" : ""} ring-blue-500 shadow-lg hover:shadow-xl transform `}
               >
