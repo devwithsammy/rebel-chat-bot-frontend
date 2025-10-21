@@ -93,6 +93,10 @@ body {
   font-optical-sizing: auto;
 }
 
+.font-space-g {
+    /* 300 to 800 */
+    font-family: "Space Grotesk", sans-serif;
+  }
 .gradient-scrollbar::-webkit-scrollbar {
   width: 8px;
 }

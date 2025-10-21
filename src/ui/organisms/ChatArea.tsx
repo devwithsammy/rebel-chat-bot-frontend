@@ -1,10 +1,14 @@
 "use client";
 import { CiLocationArrow1 } from "react-icons/ci";
-import { useMemo, useRef } from "react";
+import {  useMemo, useRef } from "react";
 import { getRandomString } from "@src/utils/string";
 import rebelGreetings from "@src/data/rebelGreetings";
+import { toast } from "react-hot-toast";
+import { getOpenRouterResponse } from "@src/lib/ai";
+import { useOpenRouterMutation } from "@src/hooks/useOpenRouterMutation";
 
 export default function ChatArea() {
+    const { mutate, data, isPending, isError, error } = useOpenRouterMutation();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -15,6 +19,28 @@ export default function ChatArea() {
       el.style.height = el.scrollHeight + "px";
     }
   };
+
+  const handleAPICall = async () => {
+    const input = textareaRef?.current?.value;
+    console.log(input, "INPUT VALUE");
+    if (!input?.trim()) {
+      toast.error("Input cannot be empty");
+      return;
+    }
+    try {
+        mutate(input);
+      // const response = await getOpenRouterResponse(input);
+      //
+    //   console.log(response, "API RESPONSE");
+    } catch (error) {
+      console.error("Error generating response:", error);
+      toast.error("Failed to generate response. Please try again.");
+    }
+  };
+  console.log(
+    { data, isPending, isError, error },
+    "OPEN ROUTER MUTATION STATE"
+  )
   const randomGreeting = useMemo(() => getRandomString(rebelGreetings), []);
   return (
     <div className="text-3xl px-4 bg-slate-100 dark:bg-zinc-700 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-10 pb-20">
@@ -34,7 +60,11 @@ export default function ChatArea() {
           placeholder="Whats on your mind? "
           className="w-full text-base focus:outline-none resize-none bg-transparent max-h-40 overflow-y-auto font-nunito focus:ring-1 p-2 rounded-[10px] ring-slate-500/10 text-gray-700 dark:text-slate-200 tracking-wider"
         />
-        <button className="self-end translate-y-[2px] flex items-center justify-center h-10 w-10 border-none bg-primary-500 rounded-full transition-all cursor-pointer hover:ring-1 focus:ring-1 focus:outline-none ring-slate-500/50  ring-offset-2">
+        <button
+          type="button"
+          onClick={handleAPICall}
+          className="self-end translate-y-[2px] flex items-center justify-center h-10 w-10 border-none bg-primary-500 rounded-full transition-all cursor-pointer hover:ring-1 focus:ring-1 focus:outline-none ring-slate-500/50  ring-offset-2"
+        >
           <CiLocationArrow1 className="text-xl text-slate-100 " />
         </button>
       </div>
