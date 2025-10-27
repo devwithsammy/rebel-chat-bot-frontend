@@ -4,27 +4,14 @@ import { TbBoxAlignLeftFilled, TbBoxAlignRightFilled } from "react-icons/tb";
 
 import { useSidebar } from "@src/contexts/SidebarContext";
 import { FaPlus } from "react-icons/fa6";
-import { format, parseISO } from "date-fns";
 
 import { useModal } from "@src/contexts/ModalContext";
 import { SettingsModal } from "./SettingsModal";
 import { SidebarTogglerBtn } from "../atoms/sidebarButtons";
 import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 import { useAuth } from "@src/contexts/AuthContext";
-import useHistory from "@src/hooks/useHistory";
 import Image from "next/image";
-
-// Function to format UTC timestamp
-const formatTimestamp = (utcTimestamp: string) => {
-  const date = parseISO(utcTimestamp); // Parse UTC timestamp
-  return format(date, "h:mm a"); // e.g., "11:45 PM"
-};
-
-// Function to format full date for older entries
-const formatFullDate = (utcTimestamp: string) => {
-  const date = parseISO(utcTimestamp);
-  return format(date, "MMM d, yyyy, h:mm a"); // e.g., "Sep 28, 2025, 2:15 PM"
-};
+import { ChatHistory } from "../molecules/ChatHistory";
 
 export const Sidebar = () => {
   const {
@@ -35,7 +22,6 @@ export const Sidebar = () => {
     sidebarPosition,
   } = useSidebar();
   const { isMobile, innerWidth } = useDeviceInfo();
-  const { groupedHistory, historyCount } = useHistory();
 
   const { modal, updateModal, closeModal } = useModal();
 
@@ -152,31 +138,7 @@ export const Sidebar = () => {
               })}
             </div>
             <div className="mt-16">
-              {/* chat history */}
-              <p className="font-semibold text-gray-700 dark:text-zinc-300 font-nunito">
-                Chat History
-              </p>
-
-              <div className="mt-4 px-2 h-[58vh] overflow-y-scroll glass-scrollbar ">
-                <SearchSection title={"Today"} items={groupedHistory.today} />
-                <SearchSection
-                  title={"Yesterday"}
-                  items={groupedHistory.yesterday}
-                />
-                <SearchSection
-                  title={"Last 30 Days"}
-                  items={groupedHistory.last30Days}
-                />
-                <SearchSection
-                  title={"Earlier"}
-                  items={groupedHistory.earlier}
-                />
-                {!historyCount && (
-                  <p className="text-gray-600  my-4">
-                    No search history yet. Go ask something!
-                  </p>
-                )}
-              </div>
+              <ChatHistory />
             </div>
           </div>
         )}
@@ -207,39 +169,13 @@ export const Sidebar = () => {
   );
 };
 
-const SearchSection = ({
-  title,
-  items,
-}: {
-  title: string;
-  items: Array<{ query: string; timestamp: string }>;
-}) => {
-  if (!items.length) return null;
-  return (
-    <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200 ">
-      <h4 className="text-sm font-semibold mb-2">{title}</h4>
-      <div className="space-y-1">
-        {items.map((item, index) => (
-          <p key={index} className="text-sm  ">
-            <span className="block truncate">{item.query}</span>
-            <span className="block text-gray-400 text-xs">
-              {title === "Earlier"
-                ? formatFullDate(item.timestamp)
-                : formatTimestamp(item.timestamp)}
-            </span>
-          </p>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const SidebarCtaButton = (p: {
   handler: () => void;
   variant: "profile" | "settings";
 }) => {
   const { user } = useAuth();
   if (!user) return null;
+  console.log(user, 'user at sidebar')
   return (
     <div
       onClick={p.handler}
@@ -252,7 +188,7 @@ const SidebarCtaButton = (p: {
           <IoSettingsOutline className="text-xl" />
         ) : (
           <Image
-            src={user?.picture||`/images/sampleUser.jpg`}
+            src={user?.picture || `/images/sampleUser.jpg`}
             alt={user?.firstName || ""}
             width={40}
             height={40}
