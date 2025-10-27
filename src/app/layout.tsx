@@ -9,6 +9,7 @@ import { AuthProvider } from "@contexts/AuthContext";
 import { ModalProvider } from "@src/contexts/ModalContext";
 import { ToasterModified } from "@src/ui/atoms/toaster";
 import QueryClientProviderLocal from "@src/ui/templates/QueryClientProvider";
+import { ConversationProvider } from "@src/contexts/ConversationContext";
 export const metadata: Metadata = {
   ...defaultMeta,
 };
@@ -41,8 +42,10 @@ export default function RootLayout({
             <ThemeProvider>
               <ModalProvider>
                 <SidebarProvider>
-                  {children}
-                  <ToasterModified />
+                  <ConversationProvider>
+                    {children}
+                    <ToasterModified />
+                  </ConversationProvider>
                 </SidebarProvider>
               </ModalProvider>
             </ThemeProvider>

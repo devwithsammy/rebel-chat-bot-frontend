@@ -3,6 +3,8 @@ import useGroupHistory from "@src/hooks/useGroupHistory";
 import { IConversationHistory } from "@src/lib/chat-service";
 import { format, parseISO } from "date-fns";
 import { SimpleErrorUI } from "../atoms/errorUI";
+import { useConversationContext } from "@src/contexts/ConversationContext";
+import { useSidebar } from "@src/contexts/SidebarContext";
 
 // Function to format UTC timestamp
 const formatTimestamp = (utcTimestamp: string) => {
@@ -23,13 +25,27 @@ const SearchSection = ({
   title: string;
   items: IConversationHistory[];
 }) => {
+    const {
+        updateConversationId
+} = useConversationContext();
+  const {
+    closeSidebar,
+ 
+  } = useSidebar();
+
   if (!items.length) return null;
   return (
-    <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200 ">
+    <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200 "
+    
+    >
       <h4 className="text-sm font-semibold mb-2">{title}</h4>
       <div className="space-y-1">
         {items.map((item, index) => (
-          <p key={index} className="text-sm  ">
+          <p key={index} className="text-sm cursor-pointer"
+          onClick={() => {updateConversationId(item.conversationId)
+            closeSidebar();
+
+          }}>
             <span className="block truncate">
               {item.lastUserMessage.substring(0, 50)}
             </span>
@@ -68,7 +84,7 @@ export const ChatHistory = () => {
     const { 
         data , isLoading, error 
     } = useConversationHistory(); 
-    
+  
     const { groupedHistory, historyCount } = useGroupHistory(data||[]);
     
     if (isLoading) {

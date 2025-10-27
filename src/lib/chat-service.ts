@@ -29,6 +29,11 @@ export const chatService = {
     const res = await api.get<IConversationHistory[]>("/conversation/user");
     return res.data;
   },
+  getConversationContext: async (id:string): Promise<IMessage[]> => {
+    if (!id) return [];
+    const res = await api.get<IMessage[]>(`/conversation/${id}`);
+    return res.data;
+  },
   chat: async (data: IChatData): Promise<IConversationResponse> => {
     const res = await api.post<IConversationResponse>("/conversation", data);
     return res.data;

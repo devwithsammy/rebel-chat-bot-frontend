@@ -11,6 +11,14 @@ export const useConversationHistory = () => {
     queryFn: chatService.getConversationHistory,
   });
 };
+
+export const useGetConversationContext= (id?:string) => { 
+    return useQuery({
+        queryKey: [...chatServiceKeys.history,id],
+        queryFn: () => chatService.getConversationContext(id||""),
+        enabled:!!id
+      }); 
+}
 export const useConversationMutation = () => {
     const queryClient = useQueryClient();
   return useMutation({
