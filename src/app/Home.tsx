@@ -17,7 +17,6 @@ export default function Home() {
   const isOnSmallDevice = isMobile || innerWidth < 768;
 
   const { loading: loadingAuth, isAuthenticated } = useAuth();
-
   const router = useRouter();
   useEffect(() => {
     if (!loadingAuth) {
