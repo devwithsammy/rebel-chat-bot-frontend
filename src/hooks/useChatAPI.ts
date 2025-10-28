@@ -26,7 +26,6 @@ export const useConversationMutation = () => {
       return await chatService.chat(data);
     },
     onSuccess: (data) => {
-      console.log("✅ Success:", data);
       queryClient.invalidateQueries({
         queryKey: chatServiceKeys.history,
       });

@@ -14,7 +14,6 @@ export default function Nav() {
   const isLeftSidebar = sidebarPosition == "left";
   const _handleThemeToggle = () => {
     // Logic to toggle theme (light/dark)
-    console.log("Theme toggled");
     toggleTheme();
   };
   // return null ;

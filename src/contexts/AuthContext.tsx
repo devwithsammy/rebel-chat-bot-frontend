@@ -43,10 +43,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const checkAuth = async () => {
     try {
       const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-      console.log("token", token);
       if (token) {
         const response = await authAPI.getProfile();
-        console.log(response, "response of get user");
         setUser(response?.data);
       }
     } catch (err) {

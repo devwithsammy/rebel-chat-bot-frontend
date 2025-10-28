@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 import { SimpleErrorUI } from "../atoms/errorUI";
 import { useConversationContext } from "@src/contexts/ConversationContext";
 import { useSidebar } from "@src/contexts/SidebarContext";
-
+import Link from 'next/link'
 // Function to format UTC timestamp
 const formatTimestamp = (utcTimestamp: string) => {
   const date = parseISO(utcTimestamp); // Parse UTC timestamp
@@ -25,13 +25,12 @@ const SearchSection = ({
   title: string;
   items: IConversationHistory[];
 }) => {
-    const {
-        updateConversationId
-} = useConversationContext();
+
   const {
     closeSidebar,
  
   } = useSidebar();
+
 
   if (!items.length) return null;
   return (
@@ -41,11 +40,10 @@ const SearchSection = ({
       <h4 className="text-sm font-semibold mb-2">{title}</h4>
       <div className="space-y-1">
         {items.map((item, index) => (
-          <p key={index} className="text-sm cursor-pointer"
-          onClick={() => {updateConversationId(item.conversationId)
-            closeSidebar();
-
-          }}>
+          <Link key={index}
+          href={`/chat/${item.conversationId}`} className="text-sm cursor-pointer"
+        //   onClick={closeSidebar}
+          >
             <span className="block truncate">
               {item.lastUserMessage.substring(0, 50)}
             </span>
@@ -54,7 +52,7 @@ const SearchSection = ({
                 ? formatFullDate(item.updatedAt)
                 : formatTimestamp(item.updatedAt)}
             </span>
-          </p>
+          </Link>
         ))}
       </div>
     </div>

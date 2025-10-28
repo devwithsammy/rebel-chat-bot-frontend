@@ -26,7 +26,6 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     showModal: false,
   });
   const updateModal = (v: IModal) => {
-    console.log("calling setmodal",v)
     setModal(v)};
 
   const closeModal = () =>

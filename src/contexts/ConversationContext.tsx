@@ -43,7 +43,6 @@ export const ConversationProvider = ({
 
     mutate(requestData, {
       onSuccess: (res) => {
-        console.log(res, "RES FROM ON SUCCESS SEND MESSAGE ");
         // Example expected res structure: { reply: "...", conversationId: "..." }
         if (res.conversationId) setConversationId(res.conversationId);
 

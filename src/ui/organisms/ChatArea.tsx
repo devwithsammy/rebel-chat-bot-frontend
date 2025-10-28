@@ -66,9 +66,11 @@ const ChatResponseLoadingAnimation = ()=> {
     
       
 }
-export default function ChatArea() {
+export default function ChatArea({conversationId}:{
+    conversationId?:string;
+}) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const { conversationId, sendMessage, messages, isPending ,updateMessagges} =
+  const { sendMessage, messages, isPending ,updateMessagges} =
     useConversationContext();
 
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -83,9 +85,7 @@ export default function ChatArea() {
         }
       }, [messages, isPending]);
       
-    console.log({
-        data, isLoading, error
-    }, 'from get conversatio context')
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     // const target = e.target as HTMLTextAreaElement;
@@ -98,7 +98,6 @@ export default function ChatArea() {
 
   const handleSend = async () => {
     const prompt = textareaRef?.current?.value;
-    console.log(prompt, "prompt VALUE");
     if (!prompt?.trim()) {
       toast.error("prompt cannot be empty");
       return;

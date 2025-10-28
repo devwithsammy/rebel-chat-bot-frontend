@@ -12,6 +12,7 @@ import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 import { useAuth } from "@src/contexts/AuthContext";
 import Image from "next/image";
 import { ChatHistory } from "../molecules/ChatHistory";
+import Link from "next/link";
 
 export const Sidebar = () => {
   const {
@@ -28,7 +29,6 @@ export const Sidebar = () => {
   const isOnSmallDevice = isMobile || innerWidth < 768;
 
   const isLeftSidebar = sidebarPosition == "left";
-  console.log(isOnSmallDevice, "is on small device");
   return (
     <>
       {isOnSmallDevice && sidebar && (
@@ -84,9 +84,12 @@ export const Sidebar = () => {
               }`}
             >
               {/* header  */}
-              <h2 className=" uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg">
+              <Link
+                href="/"
+                className=" uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg"
+              >
                 {process.env.NEXT_PUBLIC_APP_NAME}
-              </h2>
+              </Link>
 
               <SidebarTogglerBtn
                 variant="close"
@@ -175,7 +178,7 @@ const SidebarCtaButton = (p: {
 }) => {
   const { user } = useAuth();
   if (!user) return null;
-  console.log(user, 'user at sidebar')
+  console.log(user, "user at sidebar");
   return (
     <div
       onClick={p.handler}
