@@ -12,15 +12,16 @@ export const useConversationHistory = () => {
   });
 };
 
-export const useGetConversationContext= (id?:string) => { 
-    return useQuery({
-        queryKey: [...chatServiceKeys.history,id],
-        queryFn: () => chatService.getConversationContext(id||""),
-        enabled:!!id
-      }); 
-}
+export const useGetConversationContext = (id?: string) => {
+  return useQuery({
+    queryKey: [...chatServiceKeys.history, id],
+    queryFn: () => chatService.getConversationContext(id || ""),
+    enabled: !!id,
+  });
+};
+
 export const useConversationMutation = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: IChatData) => {
       return await chatService.chat(data);

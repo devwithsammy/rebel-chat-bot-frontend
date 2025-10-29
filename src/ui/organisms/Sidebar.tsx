@@ -84,12 +84,11 @@ export const Sidebar = () => {
               }`}
             >
               {/* header  */}
-              <Link
-                href="/"
+              <h2
                 className=" uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg"
               >
                 {process.env.NEXT_PUBLIC_APP_NAME}
-              </Link>
+              </h2>
 
               <SidebarTogglerBtn
                 variant="close"
@@ -98,10 +97,12 @@ export const Sidebar = () => {
               />
             </div>
 
-            <button className="p-3 py-2 rounded-md cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform ">
+            <Link 
+            href='/'
+            className="p-3 py-2 rounded-md cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform ">
               <FaPlus />
               <span>New Chat</span>
-            </button>
+            </Link>
             <div className="font-semibold text-gray-700 dark:text-zinc-300 font-nunito mb-4">
               Sidebar Position
             </div>

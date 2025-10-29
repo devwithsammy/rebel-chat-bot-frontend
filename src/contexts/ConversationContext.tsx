@@ -52,7 +52,7 @@ export const ConversationProvider = ({
       onError: (err) => {
         console.log(err);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        toast.error((err as any)?.message || "Something went wrong");
+        toast.error((err as any)?.data?.response?.message || "Something went wrong");
       },
     });
   };
