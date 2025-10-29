@@ -122,7 +122,7 @@ export const ChatHistory = () => {
         <SearchSection title={"Earlier"} items={groupedHistory.earlier} />
         {!historyCount && (
           <p className="text-gray-600  my-4">
-            No search history yet. Go ask something!
+            No search history yet.
           </p>
         )}
       </div>

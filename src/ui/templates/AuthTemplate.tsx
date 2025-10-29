@@ -12,7 +12,7 @@ export function AuthTemplate() {
 
   return (
     <div className="w-dvw h-dvh py-[10vh] px-[5%] flex items-center justify-center bg-slate-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-      <div className="md:w-[500px] w-[90%] shadow-sm  dark:shadow-slate-700/50 p-8 py-16 rounded-[30px] flex flex-col items-center ">
+      <div className="md:w-[500px] w-[90%] shadow-sm border-1 border-neutral-200 dark:border-neutral-700/50 dark:shadow-zinc-700/50 p-8 py-16 rounded-[30px] flex flex-col items-center ">
         <h4 className="w-fit uppercase font-nunito font-bold tracking-[.15em]  text-primary-600 rounded-full text-lg">
           {process.env.NEXT_PUBLIC_APP_NAME} 😒
         </h4>
