@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rebel AI Chat Frontend
+
+A sleek and responsive user interface for an AI-powered chatbot, built with Next.js, TypeScript, and Tailwind CSS. This project provides a complete frontend experience, including user authentication, real-time chat, conversation history, and a highly customizable user interface.
+
+## Features
+
+-   **Modern Chat Interface**: A clean, intuitive, and responsive layout for seamless conversations.
+-   **Secure Authentication**: Google OAuth integration for quick and secure user sign-in.
+-   **Persistent Conversations**: Chat history is automatically saved and grouped by date (Today, Yesterday, Last 30 Days).
+-   **UI Customization**:
+    -   Switch between **Light** and **Dark** themes.
+    -   Adjust the **Sidebar Position** (left or right) to your preference.
+-   **State Management**: Efficiently manages server state and caching with TanStack Query.
+-   **Component-Based Architecture**: Built with React and organized using a clear Atomic Design structure.
+-   **Type Safety**: Fully written in TypeScript for robust and maintainable code.
+
+## Technologies Used
+
+| Technology                                                 | Description                              |
+| ---------------------------------------------------------- | ---------------------------------------- |
+| [Next.js](https://nextjs.org/)                             | React framework for server-side rendering and static site generation. |
+| [TypeScript](https://www.typescriptlang.org/)              | Statically typed superset of JavaScript. |
+| [React](https://react.dev/)                                | JavaScript library for building user interfaces. |
+| [Tailwind CSS](https://tailwindcss.com/)                   | A utility-first CSS framework for rapid UI development. |
+| [TanStack Query](https://tanstack.com/query/latest)        | Powerful asynchronous state management for server-state. |
+| [Axios](https://axios-http.com/)                           | Promise-based HTTP client for the browser and Node.js. |
+| [Framer Motion](https://www.framer.com/motion/)            | A production-ready motion library for React. |
+| [React Hot Toast](https://react-hot-toast.com/)            | Provides lightweight and customizable notifications. |
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to set up and run the project locally.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/devwithsammy/rebel-chat-bot-fe.git
+    cd rebel-chat-bot-fe
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2.  **Install Dependencies**:
+    This project uses `npm` for package management.
+    ```bash
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3.  **Set Up Environment Variables**:
+    Create a `.env.local` file in the root of the project and add the following variables. Replace the example values with your actual configuration.
+    ```env
+    NEXT_PUBLIC_APP_NAME=Rebel AI
+    NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+    NEXT_PUBLIC_GOOGLE_OAUTH_URL=http://localhost:5000/api/v1/auth/google
+    NEXT_PUBLIC_ENV=development
+    ```
 
-## Learn More
+### Usage
 
-To learn more about Next.js, take a look at the following resources:
+Once the installation is complete, you can run the development server.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   **Run the Development Server**:
+    ```bash
+    npm run dev
+    ```
+-   Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to see the application in action.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are welcome! If you'd like to improve the project, please follow these steps:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   **Fork the repository** on GitHub.
+-   **Create a new branch** for your feature or bug fix: `git checkout -b feature/your-feature-name`.
+-   **Make your changes** and commit them with a descriptive message.
+-   **Push your changes** to your forked repository.
+-   **Create a pull request** to the `main` branch of the original repository.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is private and does not have an open-source license.
+
+## Author
+
+-   **GitHub**: [@devwithsammy](https://github.com/devwithsammy)
+-   **Twitter**: [@devwithsammy](https://x.com/devwithsammy)
+-   **LinkedIn**: [devwithsammy](https://www.linkedin.com/in/devwithsammy)
+
+---
+
+![Next.js](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TanStack Query](https://img.shields.io/badge/-TanStack%20Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
+
+[![Readme was generated by Dokugen](https://img.shields.io/badge/Readme%20was%20generated%20by-Dokugen-brightgreen)](https://www.npmjs.com/package/dokugen)
