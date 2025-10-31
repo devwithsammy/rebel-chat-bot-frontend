@@ -7,6 +7,7 @@ import { useConversationContext } from "@src/contexts/ConversationContext";
 import { useSidebar } from "@src/contexts/SidebarContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useDeviceInfo } from "@src/hooks/useDeviceInfo";
 // Function to format UTC timestamp
 const formatTimestamp = (utcTimestamp: string) => {
   const date = parseISO(utcTimestamp); // Parse UTC timestamp
@@ -27,6 +28,8 @@ const SearchSection = ({
   items: IConversationHistory[];
 }) => {
   const { closeSidebar } = useSidebar();
+  const { innerWidth, isMobile } = useDeviceInfo();
+  const isOnSmallDevice = isMobile || innerWidth < 768;
   const router = useRouter();
 
   if (!items.length) return null;
@@ -39,7 +42,9 @@ const SearchSection = ({
             key={index}
             className="text-sm cursor-pointer block w-full text-left"
             onClick={() => {
-              closeSidebar();
+              if (isOnSmallDevice) {
+                closeSidebar();
+              }
               router.push(`/chat/${item.conversationId}`);
             }}
           >
