@@ -50,7 +50,7 @@ Follow these instructions to set up and run the project locally.
     ```env
     NEXT_PUBLIC_APP_NAME=Rebel AI
     NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
-    NEXT_PUBLIC_GOOGLE_OAUTH_URL=http://localhost:5000/api/v1/auth/google
+    NEXT_PUBLIC_GOOGLE_O_URL=http://localhost:5000/api/v1/auth/google
     NEXT_PUBLIC_ENV=development
     ```
 
