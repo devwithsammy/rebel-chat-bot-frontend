@@ -13,6 +13,8 @@ import { useAuth } from "@src/contexts/AuthContext";
 import Image from "next/image";
 import { ChatHistory } from "../molecules/ChatHistory";
 import Link from "next/link";
+import { useConversationContext } from "@src/contexts/ConversationContext";
+import { useRouter } from "next/navigation";
 
 export const Sidebar = () => {
   const {
@@ -22,9 +24,16 @@ export const Sidebar = () => {
     updateSidebarPosition,
     sidebarPosition,
   } = useSidebar();
+  const { updateConversationId } = useConversationContext();
   const { isMobile, innerWidth } = useDeviceInfo();
 
   const { modal, updateModal, closeModal } = useModal();
+
+  const router = useRouter();
+  const handleNewChat = () => {
+    updateConversationId(undefined);
+    router.push("/");
+  };
 
   const isOnSmallDevice = isMobile || innerWidth < 768;
 
@@ -84,9 +93,7 @@ export const Sidebar = () => {
               }`}
             >
               {/* header  */}
-              <h2
-                className=" uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg"
-              >
+              <h2 className=" uppercase font-nunito font-bold tracking-[.15em] text-primary-600 rounded-full text-lg">
                 {process.env.NEXT_PUBLIC_APP_NAME}
               </h2>
 
@@ -97,12 +104,13 @@ export const Sidebar = () => {
               />
             </div>
 
-            <Link 
-            href='/'
-            className="p-3 py-2 rounded-md cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform ">
+            <button
+              onClick={handleNewChat}
+              className="p-3 py-2 rounded-md cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
+            >
               <FaPlus />
               <span>New Chat</span>
-            </Link>
+            </button>
             <div className="font-semibold text-gray-700 dark:text-zinc-300 font-nunito mb-4">
               Sidebar Position
             </div>
@@ -179,7 +187,7 @@ const SidebarCtaButton = (p: {
 }) => {
   const { user } = useAuth();
   if (!user) return null;
-  console.log(user, "user at sidebar");
+  //   console.log(user, "user at sidebar");
   return (
     <div
       onClick={p.handler}

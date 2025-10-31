@@ -28,6 +28,8 @@ export function AuthTemplate() {
               handler: () => loginWithGoogle(),
             }}
           />
+          {/* 
+          TODO 
           <p className="font-semibold tracking-wide text-sm mb-2 mt-8">OR</p>
           <div className="flex flex-col gap-4">
             <input
@@ -41,7 +43,7 @@ export function AuthTemplate() {
                 handler: () => console.log("clicked continue with email"),
               }}
             />
-          </div>
+          </div> */}
         </div>
         {error && (
           <div className="my-4 bg-red-100  text-red-700 px-4 py-3 rounded-[30px] font-nunito tracking-wide">

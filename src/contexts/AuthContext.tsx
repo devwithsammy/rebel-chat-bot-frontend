@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(response?.data);
       }
     } catch (err) {
-      console.log("Auth check failed", err);
+    //   console.log("Auth check failed", err);
       if (process.env.NEXT_PUBLIC_ENV == "production") {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
 

@@ -37,9 +37,7 @@ const AssistantMsg = ({ content }: { content: string }) => {
             <ul className="list-disc list-inside ml-3 ">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal list-inside ml-3 ">
-              {children}
-            </ol>
+            <ol className="list-decimal list-inside ml-3 ">{children}</ol>
           ),
           code: ({ children }) => (
             <code className="bg-zinc-700 px-1 py-[1px] rounded text-sm">
@@ -71,93 +69,96 @@ const ChatResponseLoadingAnimation = () => {
   );
 };
 
-
-
 interface InputFieldProps {
-    onSendMessage: (message: string) => void;
-    isPending: boolean;
-    isLoading?: boolean;
-    hasMessages?: boolean;
-  }
-  
-   function InputField({ 
-    onSendMessage, 
-    isPending, 
-    isLoading = false,
-    hasMessages = false 
-  }: InputFieldProps) {
-    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  
-    const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
-      const el = textareaRef?.current;
-      if (el) {
-        el.style.height = "auto";
-        el.style.height = el.scrollHeight + "px";
-      }
-    };
-  
-    const handleSend = async () => {
-      const prompt = textareaRef?.current?.value;
-      if (!prompt?.trim()) {
-        toast.error("Prompt cannot be empty");
-        return;
-      }
-  
-      onSendMessage(prompt);
-      if (textareaRef.current) {
-        textareaRef.current.value = "";
-        // Reset height after clearing
-        textareaRef.current.style.height = "auto";
-      }
-    };
-  
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        handleSend();
-      }
-    };
-  
-    return (
-      <div
-        className={`
-          mt-10 mb-auto flex-row shadow-sm shadow-gray-300 dark:shadow-none border-1 border-transparent dark:border-neutral-500 w-full rounded-[15px] max-w-[650px] 
+  onSendMessage: (message: string) => void;
+  isPending: boolean;
+  isLoading?: boolean;
+  hasMessages?: boolean;
+}
+
+function InputField({
+  onSendMessage,
+  isPending,
+  isLoading = false,
+  hasMessages = false,
+}: InputFieldProps) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const el = textareaRef?.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = el.scrollHeight + "px";
+    }
+  };
+
+  const handleSend = async () => {
+    const prompt = textareaRef?.current?.value;
+    if (!prompt?.trim()) {
+      toast.error("Prompt cannot be empty");
+      return;
+    }
+
+    onSendMessage(prompt);
+    if (textareaRef.current) {
+      textareaRef.current.value = "";
+      // Reset height after clearing
+      textareaRef.current.style.height = "auto";
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+  console.log(hasMessages, "pass mesa");
+  return (
+    <div
+      className={`
+         flex-row shadow-sm shadow-gray-300 dark:shadow-none border-1 border-transparent dark:border-neutral-500 w-full rounded-[15px] max-w-[650px] 
           p-4 flex gap-4 items-baseline bg-gray-50 dark:bg-zinc-600
-          ${hasMessages ? "fixed bottom-10 z-2" : ""}
+          ${hasMessages ? "fixed bottom-10 z-2 " : "mt-10"}
         `}
+    >
+      <textarea
+        ref={textareaRef}
+        onInput={handleInput}
+        onKeyDown={handleKeyDown}
+        rows={1}
+        placeholder="What's on your mind?"
+        className="w-full text-base focus:outline-none resize-none bg-transparent max-h-40 overflow-y-auto font-nunito ring-1 focus:ring-zinc-300 dark:focus:ring-zinc-200 shadow-sm dark:shadow-zinc-500 p-2 rounded-[10px] ring-slate-200/80 dark:ring-zinc-500 text-gray-700 dark:text-slate-200 tracking-wider"
+        disabled={isPending || isLoading}
+      />
+      <button
+        type="button"
+        disabled={isPending || isLoading}
+        onClick={handleSend}
+        className="disabled:cursor-not-allowed self-start text-slate-100 flex items-center justify-center min-h-[35px] min-w-[35px] h-8 w-8 border-none bg-primary-500 rounded-full transition-all cursor-pointer hover:ring-1 focus:ring-1 focus:outline-none ring-slate-500/50 ring-offset-2"
       >
-        <textarea
-          ref={textareaRef}
-          onInput={handleInput}
-          onKeyDown={handleKeyDown}
-          rows={1}
-          placeholder="What's on your mind?"
-          className="w-full text-base focus:outline-none resize-none bg-transparent max-h-40 overflow-y-auto font-nunito ring-1 focus:ring-zinc-300 dark:focus:ring-zinc-200 shadow-sm dark:shadow-zinc-500 p-2 rounded-[10px] ring-slate-200/80 dark:ring-zinc-500 text-gray-700 dark:text-slate-200 tracking-wider"
-          disabled={isPending || isLoading}
-        />
-        <button
-          type="button"
-          disabled={isPending || isLoading}
-          onClick={handleSend}
-          className="disabled:cursor-not-allowed self-start text-slate-100 flex items-center justify-center min-h-[35px] min-w-[35px] h-8 w-8 border-none bg-primary-500 rounded-full transition-all cursor-pointer hover:ring-1 focus:ring-1 focus:outline-none ring-slate-500/50 ring-offset-2"
-        >
-          {isPending || isLoading ? (
-            <CgSpinnerTwo className="animate-spin text-xl" />
-          ) : (
-            <CiLocationArrow1 className="text-xl flex-shrink-0" />
-          )}
-        </button>
-      </div>
-    );
-  }
+        {isPending || isLoading ? (
+          <CgSpinnerTwo className="animate-spin text-xl" />
+        ) : (
+          <CiLocationArrow1 className="text-xl flex-shrink-0" />
+        )}
+      </button>
+    </div>
+  );
+}
 
 export default function ChatArea({
   conversationId,
 }: {
   conversationId?: string;
 }) {
-  const { sendMessage, messages, isPending, updateMessagges } =
-    useConversationContext();
+  const {
+    sendMessage,
+    messages,
+    isPending,
+    updateMessagges,
+    conversationId: contextConversationId,
+  } = useConversationContext();
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -169,12 +170,8 @@ export default function ChatArea({
     }
   }, [messages, isPending]);
 
-
-
-
   useEffect(() => {
     updateMessagges([]); //reset messages when component unmounts
-
     if (data && Array.isArray(data) && data.length > 0) {
       updateMessagges(
         data.map((x) => ({
@@ -184,6 +181,7 @@ export default function ChatArea({
       );
     }
   }, [data, conversationId]);
+
   //   useEffect(() => {
   //     if (isError) {
   //       showToast(error?.message || "An error occurred. Try again.");
@@ -192,18 +190,21 @@ export default function ChatArea({
 
   const randomGreeting = useMemo(() => getRandomString(rebelGreetings), []);
 
-
   const handleSendMessage = (message: string) => {
     sendMessage(message);
   };
+  console.log(
+
+      conversationId,contextConversationId
+  )
   return (
     <div className="text-3xl px-4 bg-slate-100 dark:bg-zinc-700 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-20 md:pt-10 pb-10">
-
-
-      {!conversationId && (
-        <>
+      {
+      messages.length ? null:
+      (!conversationId || !contextConversationId) && (
+        <div>
           {/* header  */}
-          <div className="flex justify-center mt-auto">
+          <div className="flex justify-center">
             <h4 className="bg-slate-50 dark:bg-zinc-700  shadow-sm dark:border-primary-700 mx-auto py-4 px-6 uppercase font-nunito font-bold tracking-[.15em]  text-primary-600 dark:text-white rounded-full text-lg">
               {process.env.NEXT_PUBLIC_APP_NAME} 😒
             </h4>
@@ -211,10 +212,10 @@ export default function ChatArea({
           <div className="text-xl md:text-2xl font-light text-gray-700/80 dark:text-slate-200 mt-8 font-nunito  tracking-wider text-center">
             {randomGreeting}
           </div>
-        </>
+        </div>
       )}
 
-      {conversationId && (
+      {(conversationId || contextConversationId) && messages.length > 0 && (
         <div className="flex-1 overflow-y-auto px-4 pt-10 pb-50 flex flex-col gap-3 w-full max-w-[900px] gradient-scrollbar">
           {/* Chat Messages */}
           {messages.map((msg, i) => (
@@ -235,14 +236,13 @@ export default function ChatArea({
           <div ref={messagesEndRef} />
         </div>
       )}
-      
-        <InputField 
-           onSendMessage={handleSendMessage}
-           isPending={isPending}
-           isLoading={isLoading}
-           hasMessages={messages.length > 0}
-           />
-    
+
+      <InputField
+        onSendMessage={handleSendMessage}
+        isPending={isPending}
+        isLoading={isLoading}
+        hasMessages={messages.length > 0}
+      />
     </div>
   );
 }

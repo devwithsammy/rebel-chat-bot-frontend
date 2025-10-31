@@ -14,7 +14,7 @@ interface IConversationContext {
   conversationId?: string;
   sendMessage: (prompt: string) => void;
   isPending: boolean;
-  updateConversationId: (id: string) => void;
+  updateConversationId: (id: string|undefined) => void;
   updateMessagges: (messages: IMessage[]) => void;
 }
 
@@ -50,13 +50,13 @@ export const ConversationProvider = ({
         setMessages((prev) => [...prev, aiMsg]);
       },
       onError: (err) => {
-        console.log(err);
+        // console.log(err);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         toast.error((err as any)?.data?.response?.message || "Something went wrong");
       },
     });
   };
-  const updateConversationId = (id: string) => setConversationId(id);
+  const updateConversationId = (id: string|undefined) => setConversationId(() => id ? id : undefined);
 
   const updateMessagges = (messages: IMessage[]) => {
     setMessages(messages);
