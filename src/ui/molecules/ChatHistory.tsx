@@ -5,7 +5,8 @@ import { format, parseISO } from "date-fns";
 import { SimpleErrorUI } from "../atoms/errorUI";
 import { useConversationContext } from "@src/contexts/ConversationContext";
 import { useSidebar } from "@src/contexts/SidebarContext";
-import Link from 'next/link'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 // Function to format UTC timestamp
 const formatTimestamp = (utcTimestamp: string) => {
   const date = parseISO(utcTimestamp); // Parse UTC timestamp
@@ -25,24 +26,22 @@ const SearchSection = ({
   title: string;
   items: IConversationHistory[];
 }) => {
-
-  const {
-    closeSidebar,
- 
-  } = useSidebar();
-
+  const { closeSidebar } = useSidebar();
+  const router = useRouter();
 
   if (!items.length) return null;
   return (
-    <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200 "
-    
-    >
+    <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200 ">
       <h4 className="text-sm font-semibold mb-2">{title}</h4>
       <div className="space-y-1">
         {items.map((item, index) => (
-          <Link key={index}
-          href={`/chat/${item.conversationId}`} className="text-sm cursor-pointer"
-        //   onClick={closeSidebar}
+          <button
+            key={index}
+            className="text-sm cursor-pointer block w-full text-left"
+            onClick={() => {
+              closeSidebar();
+              router.push(`/chat/${item.conversationId}`);
+            }}
           >
             <span className="block truncate">
               {item.lastUserMessage.substring(0, 50)}
@@ -52,40 +51,38 @@ const SearchSection = ({
                 ? formatFullDate(item.updatedAt)
                 : formatTimestamp(item.updatedAt)}
             </span>
-          </Link>
+          </button>
         ))}
       </div>
     </div>
   );
 };
 
-
-const LoadingChatHistoryUI =  () => <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200">
-<div className="text-sm font-semibold mb-2">
-  {/* Skeleton for title */}
-  <div className="h-4 bg-gray-300 dark:bg-zinc-700 rounded w-1/4 animate-pulse"></div>
-</div>
-<div className="space-y-1">
-  {/* Skeleton items */}
-  {Array.from({ length: 3 }).map((_, index) => (
-    <div key={index} className="text-sm">
-      {/* Skeleton for message text */}
-      <div className="h-4 bg-gray-200 dark:bg-zinc-600 rounded w-full mb-1 animate-pulse"></div>
-      {/* Skeleton for timestamp */}
-      <div className="h-3 bg-gray-200 dark:bg-zinc-600 rounded w-1/3 animate-pulse"></div>
+const LoadingChatHistoryUI = () => (
+  <div className="mb-6 font-nunito text-gray-700 dark:text-zinc-200">
+    <div className="text-sm font-semibold mb-2">
+      {/* Skeleton for title */}
+      <div className="h-4 bg-gray-300 dark:bg-zinc-700 rounded w-1/4 animate-pulse"></div>
     </div>
-  ))}
-</div>
-</div>
+    <div className="space-y-1">
+      {/* Skeleton items */}
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div key={index} className="text-sm">
+          {/* Skeleton for message text */}
+          <div className="h-4 bg-gray-200 dark:bg-zinc-600 rounded w-full mb-1 animate-pulse"></div>
+          {/* Skeleton for timestamp */}
+          <div className="h-3 bg-gray-200 dark:bg-zinc-600 rounded w-1/3 animate-pulse"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 export const ChatHistory = () => {
+  const { data, isLoading, error } = useConversationHistory();
 
-    const { 
-        data , isLoading, error 
-    } = useConversationHistory(); 
-  
-    const { groupedHistory, historyCount } = useGroupHistory(data||[]);
-    
-    if (isLoading) {
+  const { groupedHistory, historyCount } = useGroupHistory(data || []);
+
+  if (isLoading) {
     return <LoadingChatHistoryUI />;
   }
 
@@ -104,7 +101,6 @@ export const ChatHistory = () => {
     return <SimpleErrorUI message="No history data available." />;
   }
 
-
   return (
     <div className="">
       {/* chat history */}
@@ -121,9 +117,7 @@ export const ChatHistory = () => {
         />
         <SearchSection title={"Earlier"} items={groupedHistory.earlier} />
         {!historyCount && (
-          <p className="text-gray-600  my-4">
-            No search history yet.
-          </p>
+          <p className="text-gray-600  my-4">No search history yet.</p>
         )}
       </div>
     </div>

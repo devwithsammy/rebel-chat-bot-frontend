@@ -116,7 +116,7 @@ function InputField({
   return (
     <div
       className={`
-         flex-row shadow-sm shadow-gray-300 dark:shadow-none border-1 border-transparent dark:border-neutral-500 w-full rounded-[15px] max-w-[650px] 
+         flex-row shadow-sm shadow-gray-300 dark:shadow-none border-1 border-transparent dark:border-neutral-500 w-[90vw] md:w-full rounded-[15px] max-w-[650px] 
           p-4 flex gap-4 items-baseline bg-gray-50 dark:bg-zinc-600
           ${hasMessages ? "fixed bottom-10 z-2 " : "mt-10"}
         `}

@@ -102,7 +102,10 @@ export const Sidebar = () => {
             </div>
 
             <button
-              onClick={handleNewChat}
+              onClick={() => {
+                closeSidebar();
+                handleNewChat(); 
+            }}
               className="p-3 py-2 rounded-lg border-1 border-neutral-500/20 cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
             >
               <HiOutlineChatBubbleBottomCenterText />
@@ -155,20 +158,23 @@ export const Sidebar = () => {
           <div className=" pt-4 flex flex-col gap-2 absolute bottom-0 left-0 w-full px-4 py-4">
             <SidebarCtaButton
               variant="settings"
-              handler={() =>
+              handler={() =>{
+                closeSidebar();
                 updateModal({
                   showModal: !modal.showModal,
                   variant: !modal.variant ? "general-settings" : null,
-                })
+                })}
               }
             />
             <SidebarCtaButton
               variant="profile"
-              handler={() =>
+              handler={() =>{
+                closeSidebar();
+
                 updateModal({
                   showModal: !modal.showModal,
                   variant: !modal.variant ? "profile-settings" : null,
-                })
+                })}
               }
             />
           </div>
