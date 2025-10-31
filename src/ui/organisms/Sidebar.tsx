@@ -15,6 +15,8 @@ import { ChatHistory } from "../molecules/ChatHistory";
 import Link from "next/link";
 import { useConversationContext } from "@src/contexts/ConversationContext";
 import { useRouter } from "next/navigation";
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
+
 
 export const Sidebar = () => {
   const {
@@ -24,16 +26,11 @@ export const Sidebar = () => {
     updateSidebarPosition,
     sidebarPosition,
   } = useSidebar();
-  const { updateConversationId } = useConversationContext();
+  const {  handleNewChat } = useConversationContext();
   const { isMobile, innerWidth } = useDeviceInfo();
 
   const { modal, updateModal, closeModal } = useModal();
 
-  const router = useRouter();
-  const handleNewChat = () => {
-    updateConversationId(undefined);
-    router.push("/");
-  };
 
   const isOnSmallDevice = isMobile || innerWidth < 768;
 
@@ -106,9 +103,9 @@ export const Sidebar = () => {
 
             <button
               onClick={handleNewChat}
-              className="p-3 py-2 rounded-md cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
+              className="p-3 py-2 rounded-lg border-1 border-neutral-500/20 cursor-pointer tracking-wide font-semibold w-full my-8 flex  gap-2 items-center  justify-center dark:bg-zinc-800 text-gray-600 dark:text-gray-300 transition-all duration-300 focus:outline-none hover-focus:ring-2 hover-focus:ring-blue-500 shadow-lg hover:shadow-xl transform "
             >
-              <FaPlus />
+              <HiOutlineChatBubbleBottomCenterText />
               <span>New Chat</span>
             </button>
             <div className="font-semibold text-gray-700 dark:text-zinc-300 font-nunito mb-4">

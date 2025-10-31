@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import { useConversationMutation } from "@src/hooks/useChatAPI";
 import { IChatData } from "@src/lib/chat-service";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface IMessage {
   role: "user" | "assistant";
@@ -14,8 +15,9 @@ interface IConversationContext {
   conversationId?: string;
   sendMessage: (prompt: string) => void;
   isPending: boolean;
-  updateConversationId: (id: string|undefined) => void;
-  updateMessagges: (messages: IMessage[]) => void;
+  updateConversationId: (id: string | undefined) => void;
+  updateMessages: (messages: IMessage[]) => void;
+  handleNewChat: () => void;
 }
 
 const ConversationContext = createContext<IConversationContext | null>(null);
@@ -25,7 +27,12 @@ export const ConversationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([
+    {
+      role: "user",
+      content: "hello",
+    },
+  ]);
   const [conversationId, setConversationId] = useState<string | undefined>();
   const { mutate, isPending } = useConversationMutation();
 
@@ -50,16 +57,34 @@ export const ConversationProvider = ({
         setMessages((prev) => [...prev, aiMsg]);
       },
       onError: (err) => {
-        // console.log(err);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        toast.error((err as any)?.data?.response?.message || "Something went wrong");
+        console.log(err);
+
+        toast.error(
+          (
+            err as {
+              data?: {
+                response?: {
+                  message?: string;
+                };
+              };
+            }
+          )?.data?.response?.message || "Something went wrong"
+        );
       },
     });
   };
-  const updateConversationId = (id: string|undefined) => setConversationId(() => id ? id : undefined);
+  const updateConversationId = (id: string | undefined) =>
+    setConversationId(() => (id ? id : undefined));
 
-  const updateMessagges = (messages: IMessage[]) => {
+  const updateMessages = (messages: IMessage[]) => {
     setMessages(messages);
+  };
+
+  const router = useRouter();
+  const handleNewChat = () => {
+    setMessages([]);
+    setConversationId(undefined);
+    router.push("/");
   };
 
   return (
@@ -70,7 +95,8 @@ export const ConversationProvider = ({
         sendMessage,
         isPending,
         updateConversationId,
-        updateMessagges,
+        updateMessages,
+        handleNewChat,
       }}
     >
       {children}

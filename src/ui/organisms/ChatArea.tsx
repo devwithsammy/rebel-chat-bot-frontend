@@ -156,7 +156,7 @@ export default function ChatArea({
     sendMessage,
     messages,
     isPending,
-    updateMessagges,
+    updateMessages,
     conversationId: contextConversationId,
   } = useConversationContext();
 
@@ -171,9 +171,9 @@ export default function ChatArea({
   }, [messages, isPending]);
 
   useEffect(() => {
-    updateMessagges([]); //reset messages when component unmounts
+    // updateMessages([]); //reset messages when component unmounts
     if (data && Array.isArray(data) && data.length > 0) {
-      updateMessagges(
+      updateMessages(
         data.map((x) => ({
           role: x.role,
           content: x.content,
@@ -193,29 +193,26 @@ export default function ChatArea({
   const handleSendMessage = (message: string) => {
     sendMessage(message);
   };
-  console.log(
-
-      conversationId,contextConversationId
-  )
+  console.log(conversationId, contextConversationId, messages.length);
   return (
     <div className="text-3xl px-4 bg-slate-100 dark:bg-zinc-700 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-20 md:pt-10 pb-10">
-      {
-      messages.length ? null:
-      (!conversationId || !contextConversationId) && (
-        <div>
-          {/* header  */}
-          <div className="flex justify-center">
-            <h4 className="bg-slate-50 dark:bg-zinc-700  shadow-sm dark:border-primary-700 mx-auto py-4 px-6 uppercase font-nunito font-bold tracking-[.15em]  text-primary-600 dark:text-white rounded-full text-lg">
-              {process.env.NEXT_PUBLIC_APP_NAME} 😒
-            </h4>
-          </div>
-          <div className="text-xl md:text-2xl font-light text-gray-700/80 dark:text-slate-200 mt-8 font-nunito  tracking-wider text-center">
-            {randomGreeting}
-          </div>
-        </div>
-      )}
+      {messages.length > 0
+        ? null
+        : (!conversationId || !contextConversationId) && (
+            <div>
+              {/* header  */}
+              <div className="flex justify-center">
+                <h4 className="bg-slate-50 dark:bg-zinc-700  shadow-sm dark:border-primary-700 mx-auto py-4 px-6 uppercase font-nunito font-bold tracking-[.15em]  text-primary-600 dark:text-white rounded-full text-lg">
+                  {process.env.NEXT_PUBLIC_APP_NAME} 😒
+                </h4>
+              </div>
+              <div className="text-xl md:text-2xl font-light text-gray-700/80 dark:text-slate-200 mt-8 font-nunito  tracking-wider text-center">
+                {randomGreeting}
+              </div>
+            </div>
+          )}
 
-      {(conversationId || contextConversationId) && messages.length > 0 && (
+      {messages.length > 0 && (
         <div className="flex-1 overflow-y-auto px-4 pt-10 pb-50 flex flex-col gap-3 w-full max-w-[900px] gradient-scrollbar">
           {/* Chat Messages */}
           {messages.map((msg, i) => (

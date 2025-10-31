@@ -28,13 +28,13 @@ export function ChatLayout({ children }: { children: ReactNode }) {
   }, [loadingAuth, isAuthenticated, router]);
 
   if (loadingAuth) {
-    return <AuthLoadingUI />;
-  }
+      return <AuthLoadingUI />;
+}
 
   // Don't render the main content if not authenticated
   if (!isAuthenticated) {
-    return <AuthSuccessUI />;
-  }
+      return <AuthSuccessUI />;
+}
 
   return (
     <div
