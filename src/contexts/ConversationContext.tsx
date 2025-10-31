@@ -27,12 +27,7 @@ export const ConversationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [messages, setMessages] = useState<IMessage[]>([
-    {
-      role: "user",
-      content: "hello",
-    },
-  ]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [conversationId, setConversationId] = useState<string | undefined>();
   const { mutate, isPending } = useConversationMutation();
 
