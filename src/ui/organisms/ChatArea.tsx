@@ -113,7 +113,6 @@ function InputField({
       handleSend();
     }
   };
-  console.log(hasMessages, "pass mesa");
   return (
     <div
       className={`
@@ -193,7 +192,7 @@ export default function ChatArea({
   const handleSendMessage = (message: string) => {
     sendMessage(message);
   };
-  console.log(conversationId, contextConversationId, messages.length);
+//   console.log(conversationId, contextConversationId, messages.length);
   return (
     <div className="text-3xl px-4 bg-slate-100 dark:bg-zinc-700 text-gray-950 h-screen  overflow-y-scroll flex flex-col items-center  justify-center pt-20 md:pt-10 pb-10">
       {messages.length > 0
