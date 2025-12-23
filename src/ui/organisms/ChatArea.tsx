@@ -162,12 +162,12 @@ export default function ChatArea({
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isLoading, error } = useGetConversationContext(conversationId);
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, isPending]);
+//  undo this for now 
+//   useEffect(() => {
+//     if (messagesEndRef.current) {
+//       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+//     }
+//   }, [messages, isPending]);
 
   useEffect(() => {
     // updateMessages([]); //reset messages when component unmounts
