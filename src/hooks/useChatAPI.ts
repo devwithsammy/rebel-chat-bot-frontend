@@ -32,7 +32,7 @@ export const useConversationMutation = () => {
       });
     },
     onError: (error) => {
-      console.error("❌ Error:", error.message || error);
+      console.log("❌ Error:", error.message || error);
     },
   });
 };

@@ -28,7 +28,7 @@ export default function AuthCallback() {
           throw new Error("No access token received");
         }
       } catch (error) {
-        console.error("Auth callback error:", error);
+        console.log("Auth callback error:", error);
         setMessage("Login failed. Redirecting to login...");
         setTimeout(() => router.push("/login"), 3000);
       }

@@ -52,7 +52,7 @@ export const ConversationProvider = ({
         setMessages((prev) => [...prev, aiMsg]);
       },
       onError: (err) => {
-        // console.log(err);
+        console.log(err);
 
         toast.error(
           (
